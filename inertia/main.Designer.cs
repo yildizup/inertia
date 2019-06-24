@@ -1,6 +1,6 @@
 ﻿namespace inertia
 {
-    partial class Form1
+    partial class main
     {
         /// <summary>
         /// Required designer variable.

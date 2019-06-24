@@ -8,7 +8,6 @@ namespace inertia
 {
     class PVector
     {
-
         float px, py;
         public PVector(float x, float y)
         {
@@ -81,7 +80,6 @@ namespace inertia
         {
             float mag = (float)Math.Sqrt(px * px + py * py);
             return mag;
-
         }
 
         public PVector get()
@@ -89,7 +87,6 @@ namespace inertia
             //copy the vector
             return this;
         }
-
 
         public float Px
         {

@@ -10,11 +10,27 @@ using System.Windows.Forms;
 
 namespace inertia
 {
-    public partial class Form1 : Form
+    public partial class main : Form
     {
-        public Form1()
+        Timer mainTimer;
+        public main()
         {
             InitializeComponent();
+
+            #region Timer
+            mainTimer = new Timer();
+            mainTimer.Tick += new EventHandler(TimerEventProcessor);
+            mainTimer.Interval = 7;
+            mainTimer.Start();
+            #endregion
+            this.DoubleBuffered = true;
         }
+
+        private void TimerEventProcessor(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }
