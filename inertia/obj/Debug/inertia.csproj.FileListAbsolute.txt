@@ -1,0 +1,10 @@
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\bin\Debug\inertia.exe.config
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\bin\Debug\inertia.exe
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\bin\Debug\inertia.pdb
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\obj\Debug\inertia.csprojAssemblyReference.cache
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\obj\Debug\inertia.Properties.Resources.resources
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\obj\Debug\inertia.csproj.GenerateResource.cache
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\obj\Debug\inertia.csproj.CoreCompileInputs.cache
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\obj\Debug\inertia.exe
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\obj\Debug\inertia.pdb
+D:\SCHULE\GSO_SCHULE\2 Jahr\INF_SW\2 Halbjahr\inertia\inertia\obj\Debug\inertia.main.resources

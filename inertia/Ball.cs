@@ -11,7 +11,6 @@ namespace inertia
     class Ball
     {
         Graphics g;
-        PVector mousePos;
         PVector ballPos;
         PVector velocity;
         PVector acceleration;
@@ -31,20 +30,6 @@ namespace inertia
             ballPos.add(velocity);
             velocity.limit(60);
             acceleration.multiplicate(0);
-        }
-
-        //for now i solved the problem with this
-        public void getMousePos(float x, float y)
-        {
-            mousePos = new PVector(x, y);
-        }
-
-        PVector ballToMouse()
-        {
-            PVector dir = PVector.subtract(mousePos, ballPos);
-            dir.normalize();
-            dir.multiplicate(0.4F);
-            return dir;
         }
 
         public void applyForce(PVector force)
