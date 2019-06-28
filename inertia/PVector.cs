@@ -17,22 +17,22 @@ namespace inertia
 
         #region static methods
         //static, because the class doesn't have to be initialized before using this method
-        public static PVector add(PVector v1, PVector v2)
+        public static PVector Add(PVector v1, PVector v2)
         {
             PVector v3 = new PVector(v1.px + v2.px, v1.py + v2.py);
             return v3;
         }
-        public static PVector subtract(PVector v1, PVector v2)
+        public static PVector Subtract(PVector v1, PVector v2)
         {
             PVector v3 = new PVector(v1.px - v2.px, v1.py - v2.py);
             return v3;
         }
-        public static PVector divide(PVector v1, float num)
+        public static PVector Divide(PVector v1, float num)
         {
             PVector v2 = new PVector(v1.px / num, v1.py / num);
             return v2;
         }
-        public static PVector multiplicate(PVector v1, float num)
+        public static PVector Multiplicate(PVector v1, float num)
         {
             PVector v2 = new PVector(v1.px * num, v1.py * num);
             return v2;
@@ -40,19 +40,19 @@ namespace inertia
 
         #endregion
 
-        public void divide(float num)
+        public void Divide(float num)
         {
             px /= num;
             py /= num;
         }
 
-        public void multiplicate(float num)
+        public void Multiplicate(float num)
         {
             px *= num;
             py *= num;
         }
 
-        public void limit(float max)
+        public void Limit(float max)
         {
             float CX = px;
             float CY = py;
@@ -65,24 +65,24 @@ namespace inertia
 
         }
 
-        public void add(PVector vector)
+        public void Add(PVector vector)
         {
             px += vector.px;
             py += vector.py;
         }
 
-        public void normalize()
+        public void Normalize()
         {
-            multiplicate((float)Math.Sqrt(1 / (px * px + py * py)));
+            Multiplicate((float)Math.Sqrt(1 / (px * px + py * py)));
         }
 
-        public float magnitude()
+        public float Magnitude()
         {
             float mag = (float)Math.Sqrt(px * px + py * py);
             return mag;
         }
 
-        public PVector get()
+        public PVector Get()
         {
             //copy the vector
             return this;

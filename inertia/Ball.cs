@@ -26,27 +26,32 @@ namespace inertia
 
         public void update()
         {
-            velocity.add(acceleration);
-            ballPos.add(velocity);
-            velocity.limit(60);
-            acceleration.multiplicate(0);
+            velocity.Add(acceleration);
+            ballPos.Add(velocity);
+            velocity.Limit(60);
+            acceleration.Multiplicate(0);
         }
 
         public void applyForce(PVector force)
         {
-            PVector f = force.get();
-            f.divide(mass); //since F = m * a --> a = F/m
-            acceleration.add(f);
+            PVector f = force.Get();
+            f.Divide(mass); //since F = m * a --> a = F/m
+            acceleration.Add(f);
         }
-
+        Rectangle rect;
         public void drawBall(Graphics g)
         {
             Pen pen = Pens.Black;
-            Size s = new Size(Convert.ToInt32(mass * 8), Convert.ToInt32(mass * 8));
-            Rectangle rect = new Rectangle(Convert.ToInt32(ballPos.Px), Convert.ToInt32(ballPos.Py), s.Width, s.Height);
+            Size s = new Size(Convert.ToInt32(mass), Convert.ToInt32(mass));
+            rect = new Rectangle(Convert.ToInt32(ballPos.Px), Convert.ToInt32(ballPos.Py), s.Width, s.Height);
             g.DrawEllipse(pen, rect);
         }
 
+        public Rectangle Rect
+        {
+            get { return rect; }
+            set { rect = value; }
+        }
         public PVector BallPos
         {
             get { return ballPos; }

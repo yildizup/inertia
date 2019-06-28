@@ -14,7 +14,7 @@ namespace inertia
     {
         Timer mainTimer;
 
-        Ball b = new Ball(5, 10, 30);
+        Ball b = new Ball(20, 10, 30);
         Planet p;
         public main()
         {
@@ -44,9 +44,7 @@ namespace inertia
             Graphics g = e.Graphics;
 
             b.drawBall(g);
-            p.drawPlanet(g);
-
-
+            p.DrawPlanet(g);
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
@@ -54,7 +52,7 @@ namespace inertia
             bool bo = true;
             if (bo)
             {
-                PVector pullForce = p.attract(b); //Pullforce of the Planet will be added to the ball as an acceleration
+                PVector pullForce = p.AttractBall(b); //Pullforce of the Planet will be added to the ball as an acceleration
                 b.applyForce(pullForce);
             }
         }
@@ -62,9 +60,3 @@ namespace inertia
 }
 
 
-
-
-
-
-//- removed not used code in Ball class
-// - Added Planet Class for generating Planets as an attractor
