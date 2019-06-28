@@ -25,8 +25,16 @@ namespace inertia
         public void DrawPlanet(Graphics g)
         {
             Pen pen = Pens.Green;
-            Point point = new Point(Convert.ToInt32(location.Px), Convert.ToInt32(location.Py));
-            Size size = new Size(Convert.ToInt32(mass), Convert.ToInt32(mass ));
+            Size size = new Size(Convert.ToInt32(mass), Convert.ToInt32(mass));
+            Point point = new Point(Convert.ToInt32(location.Px) - size.Width / 2, Convert.ToInt32(location.Py) - size.Height /2);
+            Rectangle rect = new Rectangle(point, size);
+            g.DrawEllipse(pen, rect);
+        }
+        public void DrawArea(Graphics g)
+        {
+            Pen pen = Pens.Green;
+            Size size = new Size(Convert.ToInt32(mass) * 2, Convert.ToInt32(mass) * 2);
+            Point point = new Point(Convert.ToInt32(location.Px) - size.Height / 2 , Convert.ToInt32(location.Py) - size.Height /2);
             Rectangle rect = new Rectangle(point, size);
             g.DrawEllipse(pen, rect);
         }
