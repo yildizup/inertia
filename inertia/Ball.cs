@@ -11,23 +11,25 @@ namespace inertia
     class Ball
     {
         Graphics g;
-        PVector ballPos;
+        PVector location;
         PVector velocity;
         PVector acceleration;
-        float mass;
+        int mass;
+        int radius;
 
-        public Ball(float m, float x, float y)
+        public Ball(int m, int x, int y)
         {
             mass = m;
-            BallPos = new PVector(x, y);
+            Location = new PVector(x, y);
             velocity = new PVector(0, 0);
             acceleration = new PVector(0, 0);
+            radius = m;
         }
 
         public void Update()
         {
             velocity.Add(acceleration);
-            BallPos.Add(velocity);
+            Location.Add(velocity);
             velocity.Limit(60);
             acceleration.Multiplicate(0);
         }
@@ -42,9 +44,8 @@ namespace inertia
         public void DrawBall(Graphics g)
         {
             Pen pen = Pens.Black;
-            Size s = new Size(Convert.ToInt32(mass), Convert.ToInt32(mass));
-            rect = new Rectangle(Convert.ToInt32(BallPos.Px), Convert.ToInt32(BallPos.Py), s.Width, s.Height);
-            g.DrawEllipse(pen, rect);
+            Size s = new Size(radius, radius);
+            g.DrawEllipse(pen, location.Px, location.Py, s.Width, s.Height);
         }
 
 
@@ -53,10 +54,10 @@ namespace inertia
             get { return rect; }
             set { rect = value; }
         }
-        public PVector BallPos
+        public PVector Location
         {
-            get { return ballPos; }
-            set { ballPos = value; }
+            get { return location; }
+            set { location = value; }
         }
         public PVector Velocity
         {
@@ -69,10 +70,17 @@ namespace inertia
             set { acceleration = value; }
         }
 
-        public float Mass
+        public int Mass
         {
             get { return mass; }
             set { mass = value; }
         }
+
+        public int Radius
+        {
+            
+            get { return radius; }
+            set { radius = value; }
+        } 
     }
 }

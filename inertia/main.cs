@@ -13,7 +13,7 @@ namespace inertia
     public partial class main : Form
     {
         Timer mainTimer;
-        Ball b = new Ball(20, 10, 30);
+        Ball b = new Ball(20, 350, 190);
         Planet p;
         bool space = false;
         public main()
@@ -35,13 +35,30 @@ namespace inertia
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             Invalidate();
-            b.BallPos.Px += 1;
             b.Update();
+
 
             if (space)
             {
                 PVector pullForce = p.AttractBall(b); //Pullforce of the Planet will be added to the ball as an acceleration
                 b.ApplyForce(pullForce);
+            }
+            if (down)
+            {
+                b.Location.Py += 1;
+            }
+            if (up)
+            {
+                b.Location.Py -= 1;
+            }
+            if (right)
+            {
+                b.Location.Px += 1;
+            }
+            if (left)
+            {
+
+                b.Location.Px -= 1;
             }
         }
 
@@ -57,12 +74,39 @@ namespace inertia
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
-            space = true; 
-        }
+            switch (e.KeyCode)
+            {
+                case Keys.Space:
+                    space = true;
+                    break;
+                case Keys.Down:
+                    down = true;
+                    break;
+                case Keys.Right:
+                    right = true;
+                    break;
+                case Keys.Left:
+                    left = true;
+                    break;
+                case Keys.Up:
+                    up = true;
+                    break;
 
+
+            }
+        }
+        bool down;
+        bool right;
+        bool up;
+        bool left;
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
             space = false;
+            down = false;
+            right = false;
+            left = false;
+            up = false;
+            
         }
     }
 }

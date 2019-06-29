@@ -71,6 +71,12 @@ namespace inertia
             py += vector.py;
         }
 
+        public void Subtract(PVector vector)
+        {
+            px -= vector.px;
+            py -= vector.py;
+        }
+
         public void Normalize()
         {
             Multiplicate((float)Math.Sqrt(1 / (px * px + py * py)));
@@ -86,6 +92,12 @@ namespace inertia
         {
             //copy the vector
             return this;
+        }
+
+        public PVector ToInt()
+        {
+            PVector asInt = new PVector(Convert.ToInt32(this.Px), Convert.ToInt32(this.Py));
+            return asInt;
         }
 
         public float Px
