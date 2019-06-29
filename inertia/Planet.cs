@@ -19,7 +19,7 @@ namespace inertia
         {
             location = new PVector(x, y);
             mass = 100;
-            G = 1;
+            G = 0.8F;
             radius = mass;
         }
 
@@ -35,7 +35,7 @@ namespace inertia
         {
             Pen pen = Pens.Green;
             Size size = new Size(radius * 4, radius * 4);
-            Point point = new Point(Convert.ToInt32(location.Px) - size.Height / 2, Convert.ToInt32(location.Py) - size.Height / 2);
+            Point point = new Point(Convert.ToInt32(location.Px) - size.Width / 2, Convert.ToInt32(location.Py) - size.Height / 2);
             Rectangle rect = new Rectangle(point, size);
             g.DrawEllipse(pen, rect);
         }
@@ -48,29 +48,52 @@ namespace inertia
         /// <returns>PVector which will be used as the force</returns>
         public PVector AttractBall(Ball b)
         {
-            PVector force = PVector.Subtract(location, b.Location);
-            float distance = force.Magnitude();
-
-            if (distance < 1 || distance > 25)
+            int rad = (radius * 4) / 2;
+            if (b.Location.Px > this.location.Px - rad  && b.Location.Px < this.location.Px + rad)
             {
-                if (distance < 1)
-                {
-                    distance = 1;
-                }
-                if (distance > 10)
-                {
-                    distance = 10;
-                }
-            }
+                PVector force = PVector.Subtract(location, b.Location);
+                float distance = force.Magnitude();
 
-            force.Normalize();
-            float strength = (G * mass * b.Mass) / (distance * distance); //gravitational force
-            force.Multiplicate(strength);
-            return force;
+                if (distance < 2 || distance > 20)
+                {
+                    if (distance < 2)
+                    {
+                        distance = 2;
+                    }
+                    if (distance > 20)
+                    {
+                        distance = 20;
+                    }
+                }
+
+                force.Normalize();
+                float strength = (G * mass * b.Mass) / (distance * distance); //gravitational force
+                force.Multiplicate(strength);
+                return force;
+            }
+            else
+            {
+                return new PVector(0, 0);
+            }
+        }
+
+        public string DebugInfo(Ball B)
+        {
+            return "Hallo";
+        }
+
+        public void DebugDraw(Graphics g)
+        {
+            Pen p = Pens.Black;
+            int rad = radius * 4 / 2;
+            //left border
+            g.DrawLine(p, location.Px - rad , location.Py, location.Px - rad, 0);
+
+            //right border
+            g.DrawLine(p, location.Px + rad, location.Py, location.Px + rad, 0);
         }
         public bool CheckCollision(Ball b)
         {
-
             PVector distance = PVector.Subtract(b.Location, location);
             float length = distance.Magnitude();
             float radii_sum = b.Radius / 2 + radius / 2;

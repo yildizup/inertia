@@ -30,7 +30,7 @@ namespace inertia
         {
             velocity.Add(acceleration);
             Location.Add(velocity);
-            velocity.Limit(60);
+            velocity.Limit(70);
             acceleration.Multiplicate(0);
         }
 

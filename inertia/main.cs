@@ -13,7 +13,7 @@ namespace inertia
     public partial class main : Form
     {
         Timer mainTimer;
-        Ball b = new Ball(20, 350, 190);
+        Ball b = new Ball(20, 10, 10);
         Planet p;
         bool space = false;
         public main()
@@ -35,6 +35,7 @@ namespace inertia
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             Invalidate();
+            b.Location.Px += 4;
             b.Update();
 
 
@@ -45,20 +46,20 @@ namespace inertia
             }
             if (down)
             {
-                b.Location.Py += 1;
+                b.Location.Py += 10;
             }
             if (up)
             {
-                b.Location.Py -= 1;
+                b.Location.Py -= 10;
             }
             if (right)
             {
-                b.Location.Px += 1;
+                b.Location.Px += 10;
             }
             if (left)
             {
 
-                b.Location.Px -= 1;
+                b.Location.Px -= 10;
             }
         }
 
@@ -70,6 +71,7 @@ namespace inertia
             b.DrawBall(g);
             p.DrawPlanet(g);
             p.DrawArea(g);
+            p.DebugDraw(g);
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)

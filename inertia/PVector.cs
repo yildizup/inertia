@@ -38,6 +38,12 @@ namespace inertia
             return v2;
         }
 
+        public static PVector Abs(PVector v1)
+        {
+            PVector v2 = new PVector(Math.Abs(v1.Px), Math.Abs(v1.Py));
+            return v2;
+        }
+
         #endregion
 
         public void Divide(float num)
