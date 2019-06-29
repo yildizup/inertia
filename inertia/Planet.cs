@@ -14,27 +14,27 @@ namespace inertia
         int mass;
         PVector location;
         float G; //gravitational constanct
-        int radius;
-        public Planet(int x, int y)
+        int diameter;
+        public Planet(int x, int y, int m)
         {
-            location = new PVector(x, y);
-            mass = 100;
+            mass = m;
             G = 0.8F;
-            radius = mass;
+            diameter = mass;
+            location = new PVector(x - diameter / 2, y - diameter / 2);
         }
 
         public void DrawPlanet(Graphics g)
         {
             Pen pen = Pens.Green;
-            Size size = new Size(radius, radius);
-            Point point = new Point(Convert.ToInt32(location.Px) - size.Width / 2, Convert.ToInt32(location.Py) - size.Height / 2);
+            Size size = new Size(diameter, diameter);
+            Point point = new Point(Convert.ToInt32(location.Px) - diameter / 2, Convert.ToInt32(location.Py) - diameter / 2);
             Rectangle rect = new Rectangle(point, size);
             g.DrawEllipse(pen, rect);
         }
         public void DrawArea(Graphics g)
         {
             Pen pen = Pens.Green;
-            Size size = new Size(radius * 4, radius * 4);
+            Size size = new Size(diameter * 4, diameter * 4);
             Point point = new Point(Convert.ToInt32(location.Px) - size.Width / 2, Convert.ToInt32(location.Py) - size.Height / 2);
             Rectangle rect = new Rectangle(point, size);
             g.DrawEllipse(pen, rect);
@@ -48,17 +48,17 @@ namespace inertia
         /// <returns>PVector which will be used as the force</returns>
         public PVector AttractBall(Ball b)
         {
-            int rad = (radius * 4) / 2;
-            if (b.Location.Px > this.location.Px - rad  && b.Location.Px < this.location.Px + rad)
+            int rad = (diameter * 4) / 2;
+            if (b.Location.Px > this.location.Px - rad && b.Location.Px < this.location.Px + rad)
             {
                 PVector force = PVector.Subtract(location, b.Location);
                 float distance = force.Magnitude();
 
-                if (distance < 2 || distance > 20)
+                if (distance < 5 || distance > 20)
                 {
-                    if (distance < 2)
+                    if (distance < 5)
                     {
-                        distance = 2;
+                        distance = 5;
                     }
                     if (distance > 20)
                     {
@@ -73,9 +73,39 @@ namespace inertia
             }
             else
             {
-                return new PVector(0, 0);
+                return SearchMinimalDistance(b);
             }
         }
+
+        PVector SearchMinimalDistance(Ball b)
+        {
+            //if the Planet is in the area of the Planet then use it and attract the ball with a very low force
+            if (location.Px > b.Location.Px - 800 && location.Py < b.Location.Px + 800)
+            {
+
+                PVector force = PVector.Subtract(location, b.Location);
+                float distance = force.Magnitude();
+                force.Normalize();
+                float strength = (70 * mass * b.Mass) / (distance * distance); //gravitational force
+                force.Multiplicate(strength);
+                return force;
+            }
+           else
+            {
+                return new PVector(0, 0);
+            } 
+
+        }
+
+      public  void DrawBallArea(Graphics g, Ball b)
+        {
+            Pen p = Pens.Black;
+            g.DrawLine(p, b.Location.Px - 500, b.Location.Py, b.Location.Px - 500, 0);
+
+
+            g.DrawLine(p, b.Location.Px + 500, b.Location.Py, b.Location.Px + 500, 0);
+        }
+
 
         public string DebugInfo(Ball B)
         {
@@ -85,9 +115,9 @@ namespace inertia
         public void DebugDraw(Graphics g)
         {
             Pen p = Pens.Black;
-            int rad = radius * 4 / 2;
+            int rad = diameter * 4 / 2;
             //left border
-            g.DrawLine(p, location.Px - rad , location.Py, location.Px - rad, 0);
+            g.DrawLine(p, location.Px - rad, location.Py, location.Px - rad, 0);
 
             //right border
             g.DrawLine(p, location.Px + rad, location.Py, location.Px + rad, 0);
@@ -96,7 +126,7 @@ namespace inertia
         {
             PVector distance = PVector.Subtract(b.Location, location);
             float length = distance.Magnitude();
-            float radii_sum = b.Radius / 2 + radius / 2;
+            float radii_sum = b.Diameter / 2 + diameter / 2;
 
             if (length <= radii_sum)
             {
@@ -111,11 +141,11 @@ namespace inertia
 
         }
 
-        public int Radius
+        public int Diameter
         {
 
-            get { return radius; }
-            set { radius = value; }
+            get { return diameter; }
+            set { diameter = value; }
         }
     }
 }

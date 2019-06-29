@@ -14,7 +14,6 @@ namespace inertia
     {
         Timer mainTimer;
         Ball b = new Ball(20, 10, 10);
-        Planet p;
         bool space = false;
         public main()
         {
@@ -28,21 +27,41 @@ namespace inertia
             #endregion
             this.DoubleBuffered = true;
 
-            p = new Planet(this.ClientSize.Width / 2, this.ClientSize.Height / 2);
         }
 
+        int tmpX = 4;
         //TODO: Planet draw the area of the graviation field
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             Invalidate();
-            b.Location.Px += 4;
+            b.Location.Px += tmpX;
             b.Update();
+            int aa = this.ClientSize.Height;
+            int bb = this.ClientSize.Width;
+            Tmp1();
+            Tmp2();
+        }
 
+        public void Tmp2()
+        {
+            if (b.Location.Px > this.ClientSize.Width || b.Location.Px < 0)
+            {
+                b.Velocity.Px *= -1;
+                tmpX *= -1;
+            }
+            if (b.Location.Py > this.ClientSize.Height || b.Location.Py < 0)
+            {
+                b.Velocity.Py *= -1;
+                tmpX *= -1;
+            }
+        }
+
+        public void Tmp1()
+        {
 
             if (space)
             {
-                PVector pullForce = p.AttractBall(b); //Pullforce of the Planet will be added to the ball as an acceleration
-                b.ApplyForce(pullForce);
+
             }
             if (down)
             {
@@ -51,6 +70,7 @@ namespace inertia
             if (up)
             {
                 b.Location.Py -= 10;
+                tmpX = 4;
             }
             if (right)
             {
@@ -61,6 +81,11 @@ namespace inertia
 
                 b.Location.Px -= 10;
             }
+            if (one)
+            {
+                b.Velocity = new PVector(0, 0);
+                tmpX = 0;
+            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -69,9 +94,6 @@ namespace inertia
             Graphics g = e.Graphics;
 
             b.DrawBall(g);
-            p.DrawPlanet(g);
-            p.DrawArea(g);
-            p.DebugDraw(g);
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
@@ -93,6 +115,9 @@ namespace inertia
                 case Keys.Up:
                     up = true;
                     break;
+                case Keys.D1:
+                    one = true;
+                    break;
 
 
             }
@@ -101,6 +126,7 @@ namespace inertia
         bool right;
         bool up;
         bool left;
+        bool one;
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
             space = false;
@@ -108,7 +134,8 @@ namespace inertia
             right = false;
             left = false;
             up = false;
-            
+            one = false;
+
         }
     }
 }

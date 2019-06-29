@@ -15,7 +15,7 @@ namespace inertia
         PVector velocity;
         PVector acceleration;
         int mass;
-        int radius;
+        int diameter;
 
         public Ball(int m, int x, int y)
         {
@@ -23,14 +23,18 @@ namespace inertia
             Location = new PVector(x, y);
             velocity = new PVector(0, 0);
             acceleration = new PVector(0, 0);
-            radius = m;
+            diameter = m;
         }
 
         public void Update()
         {
             velocity.Add(acceleration);
             Location.Add(velocity);
-            velocity.Limit(70);
+            velocity.Limit(30);
+            if (velocity.Px > 5)
+            {
+                velocity.Px = 5;
+            }
             acceleration.Multiplicate(0);
         }
 
@@ -44,7 +48,7 @@ namespace inertia
         public void DrawBall(Graphics g)
         {
             Pen pen = Pens.Black;
-            Size s = new Size(radius, radius);
+            Size s = new Size(diameter, diameter);
             g.DrawEllipse(pen, location.Px, location.Py, s.Width, s.Height);
         }
 
@@ -76,11 +80,11 @@ namespace inertia
             set { mass = value; }
         }
 
-        public int Radius
+        public int Diameter
         {
             
-            get { return radius; }
-            set { radius = value; }
+            get { return diameter; }
+            set { diameter = value; }
         } 
     }
 }
