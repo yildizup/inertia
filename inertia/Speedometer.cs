@@ -18,7 +18,6 @@ namespace inertia
         Point locationLowest;
         Rectangle[] rectangles;
         Size size;
-        Graphics g;
 
         /// <summary>
         /// 
@@ -102,6 +101,10 @@ namespace inertia
             }
         }
 
+        public int Value
+        {
+            get { return movingFromTheCenterCircle - numberCenterCircle; }
+        }
 
 
 

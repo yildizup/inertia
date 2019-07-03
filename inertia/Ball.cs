@@ -10,10 +10,12 @@ namespace inertia
 {
     class Ball
     {
+
         Graphics g;
         PVector location;
         PVector velocity;
         PVector acceleration;
+        float HorizontalVelocity;
         int mass;
         int diameter;
         int rotatingAngle = 0;
@@ -25,12 +27,13 @@ namespace inertia
             velocity = new PVector(0, 0);
             acceleration = new PVector(0, 0);
             diameter = m * 2;
+            HorizontalVelocity = 0;
         }
 
         public void Update()
         {
             velocity.Add(acceleration);
-            Velocity.Px += 0.01F;
+            Velocity.Px += HorizontalVelocity;
             Location.Add(velocity);
             velocity.Limit(30);
             if (velocity.Px > 5)
@@ -86,6 +89,50 @@ namespace inertia
         }
 
 
+        /// <summary>
+        /// Changes the horizontal velocity according to the speedometer
+        /// </summary>
+        /// <param name="value">value of the speedometer</param>
+        public void ChangeHorizontalVelocity(int value)
+        {
+            switch (value)
+            {
+                case -3:
+                    HorizontalVelocity = -0.03F;
+                    break;
+
+                case -2:
+
+                    HorizontalVelocity = -0.02F;
+                    break;
+                case -1:
+
+                    HorizontalVelocity = -0.01F;
+                    break;
+                case 0:
+
+                    HorizontalVelocity = 0F;
+                    velocity.Px = 1F;
+                    break;
+
+                case 1:
+
+                    HorizontalVelocity = 0.01F;
+                    break;
+                case 2:
+
+                    HorizontalVelocity = 0.02F;
+                    break;
+
+                case 3:
+
+                    HorizontalVelocity = 0.03F;
+                    break;
+
+            }
+
+        }
+
         public PVector Location
         {
             get { return location; }
@@ -107,7 +154,6 @@ namespace inertia
             get { return mass; }
             set { mass = value; }
         }
-
         public int Diameter
         {
 

@@ -72,6 +72,8 @@ namespace inertia
             {
                 planets[i].GetBack(b);
             }
+
+            b.ChangeHorizontalVelocity(speed.Value);
         }
 
         public void Tmp1()
@@ -87,25 +89,28 @@ namespace inertia
             }
             if (down)
             {
-                b.Location.Py += 10;
+                //b.Location.Py += 10;
+                speed.NumberDown();
+                label1.Text = speed.Value.ToString();
             }
             if (up)
             {
-                b.Location.Py -= 10;
+                //b.Location.Py -= 10;
+                speed.NumberUp();
+                label1.Text = speed.Value.ToString();
             }
             if (right)
             {
                 b.Location.Px += 10;
-                speed.NumberUp();
             }
             if (left)
             {
-                speed.NumberDown();
                 b.Location.Px -= 10;
             }
             if (one)
             {
                 b.Velocity = new PVector(0, 0);
+                b.Location = new PVector(20, 20);
             }
         }
 
