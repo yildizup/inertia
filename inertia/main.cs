@@ -16,6 +16,7 @@ namespace inertia
         Ball b;
         Planet p;
         Planet[] planets;
+        Speedometer speed;
         bool space = false;
 
 
@@ -24,14 +25,14 @@ namespace inertia
         public main()
         {
             InitializeComponent();
-            this.TopMost = true;
             #region Timer
             mainTimer = new Timer();
             mainTimer.Tick += new EventHandler(TimerEventProcessor);
-            mainTimer.Interval = 7;
+            mainTimer.Interval = 20;
             mainTimer.Start();
             #endregion
             this.DoubleBuffered = true;
+            speed = new Speedometer(7, new Point(this.ClientSize.Width - 20, 90), new Size(10, 10));
 
             matchFieldTop = this.ClientSize.Height / 5;
             matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5;
@@ -58,7 +59,6 @@ namespace inertia
             }
 
         }
-        bool color = false;
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             Invalidate();
@@ -96,10 +96,11 @@ namespace inertia
             if (right)
             {
                 b.Location.Px += 10;
+                speed.NumberUp();
             }
             if (left)
             {
-
+                speed.NumberDown();
                 b.Location.Px -= 10;
             }
             if (one)
@@ -134,11 +135,13 @@ namespace inertia
             p.DrawPlanet(g);
             p.DrawArea(g);
             p.DebugDraw(g);
+            speed.FillCircles(g);
 
             for (int i = 0; i < planets.Length; i++)
             {
                 planets[i].DrawPlanet(g);
             }
+
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
