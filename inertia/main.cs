@@ -13,8 +13,9 @@ namespace inertia
     public partial class main : Form
     {
         Timer mainTimer;
-        Ball b = new Ball(20, 10, 10);
-        Planet p = new Planet(500, 500, 100);
+        Ball b;
+        Planet p;
+        Planet[] planets;
         bool space = false;
 
 
@@ -23,7 +24,7 @@ namespace inertia
         public main()
         {
             InitializeComponent();
-
+            this.TopMost = true;
             #region Timer
             mainTimer = new Timer();
             mainTimer.Tick += new EventHandler(TimerEventProcessor);
@@ -33,11 +34,31 @@ namespace inertia
             this.DoubleBuffered = true;
 
             matchFieldTop = this.ClientSize.Height / 5;
-            matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5; 
+            matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5;
+
+            b = new Ball(0, matchFieldTop + 10, 20);
+            p = new Planet(900, this.ClientSize.Height / 2, 100);
+
+            planets = new Planet[7];
+
+            GeneratePlanets();
+
 
         }
 
-        //TODO: Planet draw the area of the graviation field
+        void GeneratePlanets()
+        {
+            Random random = new Random();
+            for (int i = 0; i < planets.Length; i++)
+            {
+                int mass = random.Next(100, 180);
+                int x_position = random.Next(mass, this.ClientSize.Width - mass);
+                int y_position = random.Next(matchFieldTop + mass, matchFieldBottom - mass);
+                planets[i] = new Planet(x_position, y_position, mass);
+            }
+
+        }
+        bool color = false;
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             Invalidate();
@@ -45,18 +66,12 @@ namespace inertia
             int aa = this.ClientSize.Height;
             int bb = this.ClientSize.Width;
             Tmp1();
-            b.Velocity.Px += 0.01F;
 
-            if (p.CheckCollision(b))
+
+            for (int i = 0; i < planets.Length; i++)
             {
-                this.BackColor = Color.Green;
+                planets[i].GetBack(b);
             }
-            else
-            {
-
-                this.BackColor = Color.White;
-            }
-
         }
 
         public void Tmp1()
@@ -64,10 +79,11 @@ namespace inertia
 
             if (space)
             {
-
-                PVector force = p.AttractBall(b);
-                b.ApplyForce(force);
-
+                for (int i = 0; i < planets.Length; i++)
+                {
+                    PVector force = planets[i].AttractBall(b);
+                    b.ApplyForce(force);
+                }
             }
             if (down)
             {
@@ -118,6 +134,11 @@ namespace inertia
             p.DrawPlanet(g);
             p.DrawArea(g);
             p.DebugDraw(g);
+
+            for (int i = 0; i < planets.Length; i++)
+            {
+                planets[i].DrawPlanet(g);
+            }
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)

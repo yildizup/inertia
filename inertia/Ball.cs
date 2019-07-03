@@ -17,7 +17,7 @@ namespace inertia
         int mass;
         int diameter;
 
-        public Ball(int m, int x, int y)
+        public Ball(int x, int y, int m)
         {
             mass = m;
             Location = new PVector(x, y);
@@ -29,6 +29,7 @@ namespace inertia
         public void Update()
         {
             velocity.Add(acceleration);
+            Velocity.Px += 0.01F;
             Location.Add(velocity);
             velocity.Limit(30);
             if (velocity.Px > 5)
@@ -49,7 +50,7 @@ namespace inertia
         {
             Pen pen = Pens.Black;
             Size s = new Size(diameter, diameter);
-            g.DrawEllipse(pen, location.Px -s.Width / 2, location.Py - s.Height /2, s.Width, s.Height);
+            g.DrawEllipse(pen, location.Px - s.Width / 2, location.Py - s.Height / 2, s.Width, s.Height);
         }
 
 
@@ -82,9 +83,9 @@ namespace inertia
 
         public int Diameter
         {
-            
+
             get { return diameter; }
             set { diameter = value; }
-        } 
+        }
     }
 }

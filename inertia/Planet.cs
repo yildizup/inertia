@@ -18,7 +18,7 @@ namespace inertia
         public Planet(int x, int y, int m)
         {
             mass = m;
-            G = 0.8F;
+            G = 0.3F;
             diameter = mass;
             location = new PVector(x - diameter / 2, y - diameter / 2);
         }
@@ -77,7 +77,7 @@ namespace inertia
             }
         }
 
-      public  void DrawBallArea(Graphics g, Ball b)
+        public void DrawBallArea(Graphics g, Ball b)
         {
             Pen p = Pens.Black;
             g.DrawLine(p, b.Location.Px - 500, b.Location.Py, b.Location.Px - 500, 0);
@@ -115,6 +115,19 @@ namespace inertia
             else
             {
                 return false;
+            }
+
+        }
+
+        public void GetBack(Ball b)
+        {
+            if (CheckCollision(b))
+            {
+                b.Velocity.Multiplicate(-1);
+            }
+            else
+            {
+
             }
 
         }
