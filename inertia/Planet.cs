@@ -73,36 +73,14 @@ namespace inertia
             }
             else
             {
-                return SearchMinimalDistance(b);
-            }
-        }
-
-        PVector SearchMinimalDistance(Ball b)
-        {
-            //if the Planet is in the area of the Planet then use it and attract the ball with a very low force
-            if (location.Px > b.Location.Px - 800 && location.Py < b.Location.Px + 800)
-            {
-
-                PVector force = PVector.Subtract(location, b.Location);
-                float distance = force.Magnitude();
-                force.Normalize();
-                float strength = (70 * mass * b.Mass) / (distance * distance); //gravitational force
-                force.Multiplicate(strength);
-                return force;
-            }
-           else
-            {
                 return new PVector(0, 0);
-            } 
-
+            }
         }
 
       public  void DrawBallArea(Graphics g, Ball b)
         {
             Pen p = Pens.Black;
             g.DrawLine(p, b.Location.Px - 500, b.Location.Py, b.Location.Px - 500, 0);
-
-
             g.DrawLine(p, b.Location.Px + 500, b.Location.Py, b.Location.Px + 500, 0);
         }
 
@@ -146,6 +124,18 @@ namespace inertia
 
             get { return diameter; }
             set { diameter = value; }
+        }
+
+        public int Mass
+        {
+            get { return mass; }
+            set { mass = value; }
+        }
+
+        public PVector Location
+        {
+            get { return location; }
+            set { location = value; }
         }
     }
 }

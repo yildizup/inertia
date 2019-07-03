@@ -14,7 +14,12 @@ namespace inertia
     {
         Timer mainTimer;
         Ball b = new Ball(20, 10, 10);
+        Planet p = new Planet(500, 500, 100);
         bool space = false;
+
+
+        readonly int matchFieldTop;
+        readonly int matchFieldBottom;
         public main()
         {
             InitializeComponent();
@@ -27,33 +32,31 @@ namespace inertia
             #endregion
             this.DoubleBuffered = true;
 
+            matchFieldTop = this.ClientSize.Height / 5;
+            matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5; 
+
         }
 
-        int tmpX = 4;
         //TODO: Planet draw the area of the graviation field
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             Invalidate();
-            b.Location.Px += tmpX;
             b.Update();
             int aa = this.ClientSize.Height;
             int bb = this.ClientSize.Width;
             Tmp1();
-            Tmp2();
-        }
+            b.Velocity.Px += 0.01F;
 
-        public void Tmp2()
-        {
-            if (b.Location.Px > this.ClientSize.Width || b.Location.Px < 0)
+            if (p.CheckCollision(b))
             {
-                b.Velocity.Px *= -1;
-                tmpX *= -1;
+                this.BackColor = Color.Green;
             }
-            if (b.Location.Py > this.ClientSize.Height || b.Location.Py < 0)
+            else
             {
-                b.Velocity.Py *= -1;
-                tmpX *= -1;
+
+                this.BackColor = Color.White;
             }
+
         }
 
         public void Tmp1()
@@ -61,6 +64,9 @@ namespace inertia
 
             if (space)
             {
+
+                PVector force = p.AttractBall(b);
+                b.ApplyForce(force);
 
             }
             if (down)
@@ -70,7 +76,6 @@ namespace inertia
             if (up)
             {
                 b.Location.Py -= 10;
-                tmpX = 4;
             }
             if (right)
             {
@@ -84,16 +89,35 @@ namespace inertia
             if (one)
             {
                 b.Velocity = new PVector(0, 0);
-                tmpX = 0;
             }
+        }
+
+
+
+        private void DrawCanvas(Graphics g)
+        {
+            Brush brush = Brushes.Black;
+
+            Point pointTop = new Point(0, 0);
+            Size size = new Size(this.ClientSize.Width, matchFieldTop);
+            Rectangle rectangleTop = new Rectangle(pointTop, size);
+            g.FillRectangle(brush, rectangleTop);
+
+            Point pointBottom = new Point(0, matchFieldBottom);
+            Rectangle rectangleBottom = new Rectangle(pointBottom, size);
+            g.FillRectangle(brush, rectangleBottom);
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
             Graphics g = e.Graphics;
-
+            DrawCanvas(g);
             b.DrawBall(g);
+            p.DrawPlanet(g);
+            p.DrawArea(g);
+            p.DebugDraw(g);
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)

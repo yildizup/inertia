@@ -49,7 +49,7 @@ namespace inertia
         {
             Pen pen = Pens.Black;
             Size s = new Size(diameter, diameter);
-            g.DrawEllipse(pen, location.Px, location.Py, s.Width, s.Height);
+            g.DrawEllipse(pen, location.Px -s.Width / 2, location.Py - s.Height /2, s.Width, s.Height);
         }
 
 
