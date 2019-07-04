@@ -14,10 +14,13 @@ namespace inertia
     {
         Timer mainTimer;
         Ball b;
-        Planet p;
+        Planet firstPlanet;
         Planet[] planets;
         Speedometer speed;
         bool space = false;
+
+        int sumXPlanets; // to have a specific distance between to planets
+        int sumYPlanets;
 
 
         readonly int matchFieldTop;
@@ -38,26 +41,29 @@ namespace inertia
             matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5;
 
             b = new Ball(0, matchFieldTop + 10, 20);
-            p = new Planet(900, this.ClientSize.Height / 2, 100);
+            //firstPlanet = new Planet(120, this.ClientSize.Height / 2, 100);
 
-            planets = new Planet[7];
+            planets = new Planet[8];
 
             GeneratePlanets();
 
-
+            sumXPlanets = 0;
+            sumYPlanets = 0;
         }
-
         void GeneratePlanets()
         {
             Random random = new Random();
+            sumXPlanets = 0;
+            sumYPlanets = 0;
             for (int i = 0; i < planets.Length; i++)
             {
                 int mass = random.Next(100, 180);
-                int x_position = random.Next(mass, this.ClientSize.Width - mass);
+                sumXPlanets += mass + 80;
+                int x_position = random.Next(sumXPlanets, sumXPlanets + 20);
                 int y_position = random.Next(matchFieldTop + mass, matchFieldBottom - mass);
                 planets[i] = new Planet(x_position, y_position, mass);
-            }
 
+            }
         }
         private void TimerEventProcessor(object sender, EventArgs e)
         {
@@ -102,6 +108,7 @@ namespace inertia
             if (right)
             {
                 b.Location.Px += 10;
+                GeneratePlanets();
             }
             if (left)
             {
@@ -137,9 +144,9 @@ namespace inertia
             Graphics g = e.Graphics;
             DrawCanvas(g);
             b.DrawBall(g);
-            p.DrawPlanet(g);
-            p.DrawArea(g);
-            p.DebugDraw(g);
+            //firstPlanet.DrawPlanet(g);
+            //firstPlanet.DrawArea(g);
+            //firstPlanet.DebugDraw(g);
             speed.FillCircles(g);
 
             for (int i = 0; i < planets.Length; i++)

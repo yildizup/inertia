@@ -18,7 +18,7 @@ namespace inertia
         public Planet(int x, int y, int m)
         {
             mass = m;
-            G = 0.6F;
+            G = 0.4F;
             diameter = mass;
             location = new PVector(x - diameter / 2, y - diameter / 2);
         }
