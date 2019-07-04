@@ -17,8 +17,9 @@ namespace inertia
         PVector acceleration;
         float HorizontalVelocity;
         int mass;
-        int diameter;
+        float diameter;
         int rotatingAngle = 0;
+        Bitmap ballBitmap;
 
         public Ball(int x, int y, int m)
         {
@@ -26,8 +27,9 @@ namespace inertia
             Location = new PVector(x, y);
             velocity = new PVector(0, 0);
             acceleration = new PVector(0, 0);
-            diameter = m * 2;
+            diameter = m * 1.5F;
             HorizontalVelocity = 0;
+            ballBitmap = new Bitmap(Properties.Resources.moving_object);
         }
 
         public void Update()
@@ -52,12 +54,12 @@ namespace inertia
         public void DrawBall(Graphics g)
         {
             Pen pen = Pens.Black;
-            Size s = new Size(diameter, diameter);
+            Size s = new Size((int)diameter, (int)diameter);
             //g.DrawArc(pen, location.Px - s.Width / 2, location.Py - s.Height / 2, s.Width, s.Height, 0, 340);
 
-            Bitmap myBitmap = new Bitmap(@"..\..\..\Pictures\ufo.png");
-            Rectangle testRect = new Rectangle(Convert.ToInt32(location.Px - s.Width / 2), Convert.ToInt32(location.Py - s.Height / 2), s.Width, s.Height);
-            g.DrawImage(RotateImage(myBitmap, rotatingAngle), testRect);
+            //Resizes according to the size of the ball
+            Rectangle resizedRectangleBitmap = new Rectangle(Convert.ToInt32(location.Px - s.Width / 2), Convert.ToInt32(location.Py - s.Height / 2), s.Width, s.Height);
+            g.DrawImage(RotateImage(ballBitmap, rotatingAngle), resizedRectangleBitmap);
             if (rotatingAngle < 360)
             {
                 rotatingAngle += 2;
@@ -170,7 +172,7 @@ namespace inertia
             get { return mass; }
             set { mass = value; }
         }
-        public int Diameter
+        public float Diameter
         {
 
             get { return diameter; }
