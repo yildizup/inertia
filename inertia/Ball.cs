@@ -45,17 +45,14 @@ namespace inertia
                 velocity.Px = 5;
             }
 
-            if (this.Location.Px >= clientSizeWidth / 3)
+            if (this.Location.Px >= clientSizeWidth / 2)
             {
-                location.Px = clientSizeWidth / 3;
+                this.Velocity.Px = -0.3F;
             }
-            if (this.Location.Px < clientSizeWidth / 5)
+            if (this.Location.Px < clientSizeWidth / 7)
             {
-                location.Px = clientSizeWidth / 7;
+                this.Velocity.Px = 0.3F;
             }
-
-
-
             acceleration.Multiplicate(0);
         }
 
@@ -127,8 +124,7 @@ namespace inertia
                     break;
                 case 0:
 
-                    HorizontalVelocity = 0F;
-                    velocity.Px = 1F;
+                    HorizontalVelocity = 0.01F;
                     break;
 
                 case 1:
