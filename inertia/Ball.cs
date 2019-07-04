@@ -27,7 +27,7 @@ namespace inertia
             Location = new PVector(x, y);
             velocity = new PVector(0, 0);
             acceleration = new PVector(0, 0);
-            diameter = m * 1.5F;
+            diameter = m * 1.75F;
             HorizontalVelocity = 0;
             ballBitmap = new Bitmap(Properties.Resources.moving_object);
         }
@@ -37,7 +37,7 @@ namespace inertia
             velocity.Add(acceleration);
             Velocity.Px += HorizontalVelocity;
             Location.Add(velocity);
-            velocity.Limit(30);
+            velocity.Limit(20);
             if (velocity.Px > 5)
             {
                 velocity.Px = 5;
@@ -139,12 +139,12 @@ namespace inertia
         {
             if (location.Py - diameter / 2 < topborder + 10)
             {
-                this.ApplyForce(new PVector(0, 20));
+                this.Velocity.Multiplicate(-0.3F);
                 location.Py += 1;
             }
             if (location.Py + diameter / 2 > bottomborder)
             {
-                this.ApplyForce(new PVector(0, -30));
+                this.Velocity.Multiplicate(-0.3F);
                 location.Py -= 1;
             }
 

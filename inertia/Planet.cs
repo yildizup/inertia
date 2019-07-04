@@ -18,7 +18,7 @@ namespace inertia
         public Planet(int x, int y, int m)
         {
             mass = m;
-            G = 0.4F;
+            G = 0.2F;
             diameter = mass;
             location = new PVector(x - diameter / 2, y - diameter / 2);
         }
@@ -119,13 +119,17 @@ namespace inertia
 
         }
 
-        public void GetBack(Ball b)
+        /// <summary>
+        /// If the ball collides it should bounce off
+        /// </summary>
+        /// <param name="b"></param>
+        public void BounceOff(Ball b)
         {
             if (CheckCollision(b))
             {
+                b.Acceleration.Multiplicate(-1);
                 b.Velocity.Multiplicate(-1);
-                b.Location.Px -= 3; //This solves the problem that the ball stucks in the planet
-                b.Location.Py -= 3;
+                //TOFIX:ball stucks in planet sometimes
             }
             else
             {
@@ -136,7 +140,6 @@ namespace inertia
 
         public int Diameter
         {
-
             get { return diameter; }
             set { diameter = value; }
         }

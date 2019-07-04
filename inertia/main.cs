@@ -14,13 +14,14 @@ namespace inertia
     {
         Timer mainTimer;
         Ball b;
-        Planet firstPlanet;
         Planet[] planets;
         Speedometer speed;
         bool space = false;
+        Random random;
 
         int sumXPlanets; // to have a specific distance between to planets
         int sumYPlanets;
+        int timeToGenerate; //Time after the new Planets are generated
 
 
         readonly int matchFieldTop;
@@ -35,6 +36,7 @@ namespace inertia
             mainTimer.Start();
             #endregion
             this.DoubleBuffered = true;
+            random = new Random();
             speed = new Speedometer(7, new Point(this.ClientSize.Width - 20, 90), new Size(10, 10));
 
             matchFieldTop = this.ClientSize.Height / 5;
@@ -43,42 +45,50 @@ namespace inertia
             b = new Ball(0, matchFieldTop + 10, 20);
             //firstPlanet = new Planet(120, this.ClientSize.Height / 2, 100);
 
-            planets = new Planet[8];
+            planets = new Planet[7];
 
             GeneratePlanets();
 
             sumXPlanets = 0;
             sumYPlanets = 0;
+            timeToGenerate = 0;
+
         }
         void GeneratePlanets()
         {
-            Random random = new Random();
             sumXPlanets = 0;
             sumYPlanets = 0;
             for (int i = 0; i < planets.Length; i++)
             {
                 int mass = random.Next(100, 180);
-                sumXPlanets += mass + 80;
+                sumXPlanets += mass + 80; //Planets have a minimum distance of their diameter + 80
                 int x_position = random.Next(sumXPlanets, sumXPlanets + 20);
                 int y_position = random.Next(matchFieldTop + mass * 2, matchFieldBottom - mass / 2);
                 planets[i] = new Planet(x_position, y_position, mass);
-
             }
         }
+
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             Invalidate();
             b.Update();
             Tmp1();
+            timeToGenerate += 7;
+            if (timeToGenerate >= 5000)
+            {
+                GeneratePlanets();
+                timeToGenerate = 0;
+            }
 
 
             for (int i = 0; i < planets.Length; i++)
             {
-                planets[i].GetBack(b);
+                planets[i].BounceOff(b);
             }
 
             b.ChangeHorizontalVelocity(speed.Value);
-            b.BounceOfBorder(matchFieldTop,matchFieldBottom);
+            b.BounceOfBorder(matchFieldTop, matchFieldBottom);
+
         }
 
         public void Tmp1()
@@ -150,12 +160,13 @@ namespace inertia
 
             for (int i = 0; i < planets.Length; i++)
             {
+                //TOFIX: Planets come closer to each other each round.
                 planets[i].DrawPlanet(g);
-                planets[i].Location.Px -= 1;
+                planets[i].Location.Px -= 2;
 
-                if (planets[i].Location.Px < 0 - planets[i].Mass / 2)
+                if (planets[i].Location.Px < 0 - planets[i].Mass)
                 {
-                    planets[i].Location.Px = this.ClientSize.Width + planets[i].Mass / 2;
+                    planets[i].Location.Px = this.ClientSize.Width ;
                 }
             }
 
