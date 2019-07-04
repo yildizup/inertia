@@ -42,7 +42,7 @@ namespace inertia
             matchFieldTop = this.ClientSize.Height / 5;
             matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5;
 
-            b = new Ball(0, matchFieldTop + 10, 20);
+            b = new Ball(0, matchFieldTop + 10, 20,this.ClientSize.Width);
             //firstPlanet = new Planet(120, this.ClientSize.Height / 2, 100);
 
             planets = new Planet[7];

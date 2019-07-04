@@ -20,8 +20,9 @@ namespace inertia
         float diameter;
         int rotatingAngle = 0;
         Bitmap ballBitmap;
+        int clientSizeWidth;
 
-        public Ball(int x, int y, int m)
+        public Ball(int x, int y, int m, int sizeWidth)
         {
             mass = m;
             Location = new PVector(x, y);
@@ -30,6 +31,7 @@ namespace inertia
             diameter = m * 1.75F;
             HorizontalVelocity = 0;
             ballBitmap = new Bitmap(Properties.Resources.moving_object);
+            clientSizeWidth = sizeWidth;
         }
 
         public void Update()
@@ -42,6 +44,18 @@ namespace inertia
             {
                 velocity.Px = 5;
             }
+
+            if (this.Location.Px >= clientSizeWidth / 3)
+            {
+                location.Px = clientSizeWidth / 3;
+            }
+            if (this.Location.Px < clientSizeWidth / 5)
+            {
+                location.Px = clientSizeWidth / 7;
+            }
+
+
+
             acceleration.Multiplicate(0);
         }
 
