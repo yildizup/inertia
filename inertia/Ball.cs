@@ -133,6 +133,22 @@ namespace inertia
 
         }
 
+        public void BounceOfBorder(int topborder, int bottomborder)
+        {
+            if (location.Py - diameter / 2 < topborder + 10)
+            {
+                this.ApplyForce(new PVector(0, 20));
+                location.Py += 1;
+            }
+            if (location.Py + diameter / 2 > bottomborder)
+            {
+                this.ApplyForce(new PVector(0, -30));
+                location.Py -= 1;
+            }
+
+
+        }
+
         public PVector Location
         {
             get { return location; }

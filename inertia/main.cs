@@ -31,7 +31,7 @@ namespace inertia
             #region Timer
             mainTimer = new Timer();
             mainTimer.Tick += new EventHandler(TimerEventProcessor);
-            mainTimer.Interval = 20;
+            mainTimer.Interval = 7;
             mainTimer.Start();
             #endregion
             this.DoubleBuffered = true;
@@ -60,7 +60,7 @@ namespace inertia
                 int mass = random.Next(100, 180);
                 sumXPlanets += mass + 80;
                 int x_position = random.Next(sumXPlanets, sumXPlanets + 20);
-                int y_position = random.Next(matchFieldTop + mass, matchFieldBottom - mass);
+                int y_position = random.Next(matchFieldTop + mass * 2, matchFieldBottom - mass / 2);
                 planets[i] = new Planet(x_position, y_position, mass);
 
             }
@@ -69,8 +69,6 @@ namespace inertia
         {
             Invalidate();
             b.Update();
-            int aa = this.ClientSize.Height;
-            int bb = this.ClientSize.Width;
             Tmp1();
 
 
@@ -80,6 +78,7 @@ namespace inertia
             }
 
             b.ChangeHorizontalVelocity(speed.Value);
+            b.BounceOfBorder(matchFieldTop,matchFieldBottom);
         }
 
         public void Tmp1()
@@ -117,7 +116,7 @@ namespace inertia
             if (one)
             {
                 b.Velocity = new PVector(0, 0);
-                b.Location = new PVector(20, 20);
+                b.Location = new PVector(20, matchFieldTop + 20);
             }
         }
 
@@ -152,6 +151,12 @@ namespace inertia
             for (int i = 0; i < planets.Length; i++)
             {
                 planets[i].DrawPlanet(g);
+                planets[i].Location.Px -= 1;
+
+                if (planets[i].Location.Px < 0 - planets[i].Mass / 2)
+                {
+                    planets[i].Location.Px = this.ClientSize.Width + planets[i].Mass / 2;
+                }
             }
 
         }

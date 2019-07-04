@@ -124,6 +124,8 @@ namespace inertia
             if (CheckCollision(b))
             {
                 b.Velocity.Multiplicate(-1);
+                b.Location.Px -= 3; //This solves the problem that the ball stucks in the planet
+                b.Location.Py -= 3;
             }
             else
             {
