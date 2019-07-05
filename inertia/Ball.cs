@@ -15,7 +15,6 @@ namespace inertia
         PVector location;
         PVector velocity;
         PVector acceleration;
-        float HorizontalVelocity;
         int mass;
         float diameter;
         int rotatingAngle = 0;
@@ -29,7 +28,6 @@ namespace inertia
             velocity = new PVector(0, 0);
             acceleration = new PVector(0, 0);
             diameter = m * 1.75F;
-            HorizontalVelocity = 0;
             ballBitmap = new Bitmap(Properties.Resources.moving_object);
             clientSizeWidth = sizeWidth;
         }
@@ -37,13 +35,12 @@ namespace inertia
         public void Update()
         {
             velocity.Add(acceleration);
-            Velocity.Px += HorizontalVelocity;
             Location.Add(velocity);
             velocity.Limit(20);
-            if (velocity.Px > 5)
-            {
-                velocity.Px = 5;
-            }
+            //if (velocity.Px > 5)
+            //{
+            //    velocity.Px = 5;
+            //}
 
             if (this.Location.Px >= clientSizeWidth / 1.4)
             {
@@ -111,34 +108,34 @@ namespace inertia
             switch (value)
             {
                 case -3:
-                    HorizontalVelocity = -0.4F;
+                    this.velocity.Px = -1F;
                     break;
 
                 case -2:
 
-                    HorizontalVelocity = -0.3F;
+                    this.velocity.Px = -0.8F;
                     break;
                 case -1:
 
-                    HorizontalVelocity = -0.2F;
+                    this.velocity.Px = -0.5F;
                     break;
                 case 0:
 
-                    HorizontalVelocity = 0.1F;
+                    this.velocity.Px = 0.5F;
                     break;
 
                 case 1:
 
-                    HorizontalVelocity = 0.1F;
+                    this.velocity.Px = 1F;
                     break;
                 case 2:
 
-                    HorizontalVelocity = 0.2F;
+                    this.velocity.Px = 1.5F;
                     break;
 
                 case 3:
 
-                    HorizontalVelocity = 0.3F;
+                    this.velocity.Px = 2F;
                     break;
 
             }

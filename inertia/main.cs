@@ -18,16 +18,18 @@ namespace inertia
         Speedometer speed;
         bool space = false;
         Random random;
+        bool startGame;
 
         int sumXPlanets; // to have a specific distance between to planets
         int sumYPlanets;
 
         int score = 0;
-        bool aboveOrUnder = false; //only give changing points
+        bool aboveOrUnder = true; //only give changing points
         int timeCounter = 0; //only check every 1 second
 
         readonly int matchFieldTop;
         readonly int matchFieldBottom;
+
         public main()
         {
             InitializeComponent();
@@ -37,24 +39,29 @@ namespace inertia
             mainTimer.Interval = 7;
             mainTimer.Start();
             #endregion
+
+            #region Form properties
+            this.Icon = Properties.Resources.icon;
             this.WindowState = FormWindowState.Maximized;
             this.DoubleBuffered = true;
-            random = new Random();
             this.BackColor = Color.Black;
-            speed = new Speedometer(7, new Point(this.ClientSize.Width / 2, 90), new Size(20, 20));
+            this.FormBorderStyle = FormBorderStyle.None;
+            #endregion
 
             matchFieldTop = this.ClientSize.Height / 5;
             matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5;
 
-            this.Icon = Properties.Resources.icon;
+            speed = new Speedometer(7, new Point(this.ClientSize.Width / 2, 90), new Size(20, 20));
+            random = new Random();
+
             b = new Ball(0, matchFieldTop + 10, 20, this.ClientSize.Width);
 
             planets = new Planet[7];
 
             GeneratePlanets();
 
-            this.FormBorderStyle = FormBorderStyle.None;
 
+            startGame = false;
             sumXPlanets = 0;
             sumYPlanets = 0;
 
@@ -66,7 +73,7 @@ namespace inertia
             sumYPlanets = 0;
             for (int i = 0; i < planets.Length; i++)
             {
-                int mass = random.Next(100, 180);
+                int mass = random.Next(100, 150);
                 sumXPlanets += mass + 120; //Planets have a minimum distance of their diameter + 80
                 int x_position = random.Next(sumXPlanets, sumXPlanets + 20);
                 int y_position = random.Next(matchFieldTop + mass * 2, matchFieldBottom - mass / 2);
@@ -75,47 +82,60 @@ namespace inertia
         }
         private void TimerEventProcessor(object sender, EventArgs e)
         {
-            Invalidate();
-            b.Update();
-            Tmp1();
-
-
-            for (int i = 0; i < planets.Length; i++)
+            if (startGame)
             {
-                if (planets[i].CheckCollision(b))
-                {
-                    b.Location = new PVector(0, matchFieldTop + 20);
-                    score = 0;
-                }
+                Invalidate();
+                b.Update();
+                EventOnKeyPress();
 
-                #region Score Counter
-                //calculate the two points if ball is above add 1 to score and then the other way around
-
-                timeCounter += 7;
-                if (timeCounter >= 1000) //Every second one point
+                for (int i = 0; i < planets.Length; i++)
                 {
-                    if (i > 0)
+                    if (planets[i].CheckCollision(b))
                     {
-                        if (b.Location.Py < planets[i].Location.Py && aboveOrUnder == false)
-                        {
-                            score++;
-                            aboveOrUnder = true;
-                        }
-                        if (b.Location.Py > planets[i].Location.Py && aboveOrUnder == true)
-                        {
-                            score++;
-                            aboveOrUnder = false;
-                        }
-
-
+                        b.Location = new PVector(0, matchFieldTop + 20);
+                        GeneratePlanets();
+                        score = 0;
+                        startGame = false;
                     }
-                    timeCounter = 0;
-                }
-                #endregion
-            }
 
-            b.ChangeHorizontalVelocity(speed.Value);
-            b.BounceOfBorder(matchFieldTop, matchFieldBottom);
+                    #region Score Counter
+                    //calculate the two points. Change boolean according to their position change
+
+                    timeCounter += 7;
+                    if (timeCounter >= 1000) //Every second one point
+                    {
+                        if (i > 0)
+                        {
+                            if (b.Location.Py < planets[i].Location.Py && aboveOrUnder == false)
+                            {
+                                score++;
+                                aboveOrUnder = true;
+                            }
+                            if (b.Location.Py > planets[i].Location.Py && aboveOrUnder == true)
+                            {
+                                score++;
+                                aboveOrUnder = false;
+                            }
+
+
+                        }
+                        timeCounter = 0;
+                    }
+                    #endregion
+                }
+
+                b.ChangeHorizontalVelocity(speed.Value);
+                b.BounceOfBorder(matchFieldTop, matchFieldBottom);
+            }
+            if (!startGame)
+            {
+                Invalidate();
+                if (up)
+                {
+                    startGame = true;
+                }
+
+            }
         }
 
 
@@ -140,10 +160,12 @@ namespace inertia
                 }
             }
 
-            //g.DrawLine(Pens.White, new Point(this.ClientSize.Width / 2, 100), new Point(this.ClientSize.Width / 2, 0));
-
             WriteScore(g);
 
+            if (!startGame)
+            {
+                StartMenu(g);
+            }
         }
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
@@ -179,8 +201,10 @@ namespace inertia
             one = false;
 
         }
-
-        public void Tmp1()
+        /// <summary>
+        /// determines what should happen, when a key is pressed
+        /// </summary>
+        public void EventOnKeyPress()
         {
 
             if (space)
@@ -202,7 +226,10 @@ namespace inertia
 
                 for (int i = 0; i < planets.Length; i++)
                 {
-                    planets[i].Transparency = 40;
+                    if (planets[i].Transparency > 40)
+                    {
+                        planets[i].Transparency -= 2;
+                    }
                 }
             }
             if (up)
@@ -215,7 +242,10 @@ namespace inertia
                 b.Location = new PVector(20, matchFieldTop + 20);
             }
         }
-
+        /// <summary>
+        /// draw the upper and lower canvas
+        /// </summary>
+        /// <param name="g"></param>
         private void DrawCanvas(Graphics g)
         {
             Brush brush = Brushes.Black;
@@ -236,12 +266,21 @@ namespace inertia
 
         }
 
+
         void WriteScore(Graphics g)
         {
             Font font = new Font("MS Comic Sans", 24);
             string sScore = String.Format("{0}", score);
             SizeF stringValues = g.MeasureString(sScore, font);
             g.DrawString(sScore, font, Brushes.White, new Point(Convert.ToInt32(this.ClientSize.Width / 2 - stringValues.Width / 2), Convert.ToInt32(matchFieldTop - stringValues.Height)));
+        }
+
+        void StartMenu(Graphics g)
+        {
+            Font font = new Font("MS Comic Sans", 24);
+            string sScore = "Press [UP] arrow to start";
+            SizeF stringValues = g.MeasureString(sScore, font);
+            g.DrawString(sScore, font, Brushes.White, new Point(Convert.ToInt32(this.ClientSize.Width / 2 - stringValues.Width / 2), Convert.ToInt32(this.ClientSize.Height / 2 - stringValues.Height)));
 
         }
 
