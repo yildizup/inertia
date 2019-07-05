@@ -22,7 +22,7 @@ namespace inertia
             G = 0.5F;
             diameter = mass;
             location = new PVector(x - diameter / 2, y - diameter / 2);
-            //planetBitmap = new Bitmap(Properties.Resources.planet1);
+            planetBitmap = new Bitmap(Properties.Resources.planet1);
         }
 
         public void DrawPlanet(Graphics g)
@@ -31,10 +31,10 @@ namespace inertia
             Size size = new Size(diameter, diameter);
             Point point = new Point(Convert.ToInt32(location.Px) - diameter / 2, Convert.ToInt32(location.Py) - diameter / 2);
             Rectangle rect = new Rectangle(point, size);
-            g.DrawEllipse(pen, rect);
+            //g.DrawEllipse(pen, rect);
 
-            //Rectangle resizedRectangleBitmap = new Rectangle(Convert.ToInt32(location.Px - size.Width / 2), Convert.ToInt32(location.Py - size.Height / 2), size.Width, size.Height);
-            //g.DrawImage(planetBitmap, resizedRectangleBitmap);
+            Rectangle resizedRectangleBitmap = new Rectangle(Convert.ToInt32(location.Px - size.Width / 2), Convert.ToInt32(location.Py - size.Height / 2), size.Width, size.Height);
+            g.DrawImage(planetBitmap, resizedRectangleBitmap);
         }
         public void DrawArea(Graphics g)
         {
