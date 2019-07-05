@@ -138,7 +138,7 @@ namespace inertia
 
                 case 3:
 
-                    HorizontalVelocity = 0.03F;
+                    HorizontalVelocity = 0.3F;
                     break;
 
             }

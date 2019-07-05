@@ -43,6 +43,7 @@ namespace inertia
             matchFieldTop = this.ClientSize.Height / 5;
             matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5;
 
+            this.Icon = Properties.Resources.icon;
             b = new Ball(0, matchFieldTop + 10, 20,this.ClientSize.Width);
             //firstPlanet = new Planet(120, this.ClientSize.Height / 2, 100);
 
@@ -87,7 +88,7 @@ namespace inertia
                 planets[i].BounceOff(b);
             }
 
-            //b.ChangeHorizontalVelocity(speed.Value);
+            b.ChangeHorizontalVelocity(speed.Value);
             b.BounceOfBorder(matchFieldTop, matchFieldBottom);
 
         }
