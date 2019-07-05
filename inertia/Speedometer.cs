@@ -27,8 +27,8 @@ namespace inertia
             drawedCircle = number / 2; //it begins from the middle
             point = p;
             size = s;
-            int distanceX = 15;
-            point.X -= (number + 1) * distanceX - 3;
+            int distanceX = 25;
+            point.X -= distanceX * (n - 1) - 3; //every +distanceX moves the center to the right, so i subtract it back
             int distanceY = -5;
 
             for (int i = 0; i < rectangles.Length; i++)
@@ -69,7 +69,7 @@ namespace inertia
             {
                 for (int i = centerCircle + 1; i <= drawedCircle; i++)
                 {
-                    g.FillEllipse(Brushes.Red, rectangles[i]);
+                    g.FillEllipse(Brushes.Blue, rectangles[i]);
                 }
             }
 
@@ -96,6 +96,11 @@ namespace inertia
             {
                 drawedCircle--;
             }
+        }
+
+        public int Value
+        {
+            get { return -(centerCircle - drawedCircle); } //To make the right side positive
         }
 
 

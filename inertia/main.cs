@@ -37,6 +37,7 @@ namespace inertia
             #endregion
             this.DoubleBuffered = true;
             random = new Random();
+            this.BackColor = Color.Black;
             speed = new Speedometer(7, new Point(this.ClientSize.Width / 2, 90), new Size(20, 20));
 
             matchFieldTop = this.ClientSize.Height / 5;
@@ -106,13 +107,13 @@ namespace inertia
             {
                 //b.Location.Py += 10;
                 speed.NumberDown();
-                //label1.Text = speed.Value.ToString();
+                label1.Text = speed.Value.ToString();
             }
             if (up)
             {
                 //b.Location.Py -= 10;
                 speed.NumberUp();
-                //label1.Text = speed.Value.ToString();
+                label1.Text = speed.Value.ToString();
             }
             if (right)
             {
@@ -144,6 +145,11 @@ namespace inertia
             Point pointBottom = new Point(0, matchFieldBottom);
             Rectangle rectangleBottom = new Rectangle(pointBottom, size);
             g.FillRectangle(brush, rectangleBottom);
+
+            //Draw Lines
+            g.DrawLine(Pens.White, new Point(0, matchFieldTop), new Point(this.ClientSize.Width, matchFieldTop));
+
+            g.DrawLine(Pens.White, new Point(0, matchFieldBottom), new Point(this.ClientSize.Width, matchFieldBottom));
 
         }
 
