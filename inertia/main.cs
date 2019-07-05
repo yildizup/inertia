@@ -44,7 +44,7 @@ namespace inertia
             matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5;
 
             this.Icon = Properties.Resources.icon;
-            b = new Ball(0, matchFieldTop + 10, 20,this.ClientSize.Width);
+            b = new Ball(0, matchFieldTop + 10, 20, this.ClientSize.Width);
             //firstPlanet = new Planet(120, this.ClientSize.Height / 2, 100);
 
             planets = new Planet[7];
@@ -56,6 +56,7 @@ namespace inertia
             timeToGenerate = 0;
 
         }
+
         void GeneratePlanets()
         {
             sumXPlanets = 0;
@@ -75,17 +76,11 @@ namespace inertia
             Invalidate();
             b.Update();
             Tmp1();
-            //timeToGenerate += 7;
-            //if (timeToGenerate >= 5000)
-            //{
-            //    GeneratePlanets();
-            //    timeToGenerate = 0;
-            //}
 
 
             for (int i = 0; i < planets.Length; i++)
             {
-                if(planets[i].CheckCollision(b))
+                if (planets[i].CheckCollision(b))
                 {
                     b.Location = new PVector(0, matchFieldTop + 20);
                 }
@@ -93,6 +88,82 @@ namespace inertia
 
             b.ChangeHorizontalVelocity(speed.Value);
             b.BounceOfBorder(matchFieldTop, matchFieldBottom);
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            Graphics g = e.Graphics;
+            DrawCanvas(g);
+            b.DrawBall(g);
+            //firstPlanet.DrawPlanet(g);
+            //firstPlanet.DrawArea(g);
+            //firstPlanet.DebugDraw(g);
+            speed.FillCircles(g);
+
+            for (int i = 0; i < planets.Length; i++)
+            {
+                //TODO: Planets come closer to each other each round.
+                planets[i].DrawPlanet(g);
+                planets[i].Location.Px -= 2;
+
+                if (planets[i].Location.Px < 0 - 100)
+                {
+                    planets[i].Location.Px = this.ClientSize.Width + 100;
+                }
+
+
+                //Draw Line between to planets
+                if (i > 0 && i < planets.Length )
+                {
+                    g.DrawLine(Pens.White, new Point((int)planets[i - 1].Location.Px, (int)planets[i - 1].Location.Py), new Point((int)planets[i].Location.Px, (int)planets[i].Location.Py));
+                }
+
+
+            }
+
+            g.DrawLine(Pens.White, new Point(this.ClientSize.Width / 2, 100), new Point(this.ClientSize.Width / 2, 0));
+
+        }
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Space:
+                    space = true;
+                    break;
+                case Keys.Down:
+                    down = true;
+                    break;
+                case Keys.Right:
+                    right = true;
+                    break;
+                case Keys.Left:
+                    left = true;
+                    break;
+                case Keys.Up:
+                    up = true;
+                    break;
+                case Keys.D1:
+                    one = true;
+                    break;
+            }
+        }
+
+        bool down;
+        bool right;
+        bool up;
+        bool left;
+        bool one;
+        private void Main_KeyUp(object sender, KeyEventArgs e)
+        {
+            space = false;
+            down = false;
+            right = false;
+            left = false;
+            up = false;
+            one = false;
 
         }
 
@@ -135,8 +206,6 @@ namespace inertia
             }
         }
 
-
-
         private void DrawCanvas(Graphics g)
         {
             Brush brush = Brushes.Black;
@@ -154,75 +223,6 @@ namespace inertia
             g.DrawLine(Pens.White, new Point(0, matchFieldTop), new Point(this.ClientSize.Width, matchFieldTop));
 
             g.DrawLine(Pens.White, new Point(0, matchFieldBottom), new Point(this.ClientSize.Width, matchFieldBottom));
-
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-            Graphics g = e.Graphics;
-            DrawCanvas(g);
-            b.DrawBall(g);
-            //firstPlanet.DrawPlanet(g);
-            //firstPlanet.DrawArea(g);
-            //firstPlanet.DebugDraw(g);
-            speed.FillCircles(g);
-
-            for (int i = 0; i < planets.Length; i++)
-            {
-                //TOFIX: Planets come closer to each other each round.
-                planets[i].DrawPlanet(g);
-                planets[i].Location.Px -= 2;
-
-                if (planets[i].Location.Px < 0 - 100 )
-                {
-                    planets[i].Location.Px = this.ClientSize.Width + 100 ;
-                }
-            }
-
-            g.DrawLine(Pens.White, new Point(this.ClientSize.Width / 2, 100), new Point(this.ClientSize.Width / 2, 0));
-
-        }
-
-        private void Main_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Space:
-                    space = true;
-                    break;
-                case Keys.Down:
-                    down = true;
-                    break;
-                case Keys.Right:
-                    right = true;
-                    break;
-                case Keys.Left:
-                    left = true;
-                    break;
-                case Keys.Up:
-                    up = true;
-                    break;
-                case Keys.D1:
-                    one = true;
-                    break;
-
-
-            }
-        }
-        bool down;
-        bool right;
-        bool up;
-        bool left;
-        bool one;
-        private void Main_KeyUp(object sender, KeyEventArgs e)
-        {
-            space = false;
-            down = false;
-            right = false;
-            left = false;
-            up = false;
-            one = false;
 
         }
     }
