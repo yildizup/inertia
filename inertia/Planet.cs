@@ -16,6 +16,7 @@ namespace inertia
         float G; //gravitational constanct
         int diameter;
         Bitmap planetBitmap;
+        int transparency;
         public Planet(int x, int y, int m)
         {
             mass = m;
@@ -23,6 +24,7 @@ namespace inertia
             diameter = mass;
             location = new PVector(x - diameter / 2, y - diameter / 2);
             planetBitmap = new Bitmap(Properties.Resources.planet1);
+            transparency = 20;
         }
 
         public void DrawPlanet(Graphics g)
@@ -38,11 +40,17 @@ namespace inertia
         }
         public void DrawArea(Graphics g)
         {
-            Pen pen = Pens.Green;
-            Size size = new Size(diameter * 4, diameter * 4);
+            SolidBrush opaqueBrush = new SolidBrush(Color.FromArgb(transparency, 0, 0, 255));
+            Size size = new Size(diameter + 30, diameter + 30);
             Point point = new Point(Convert.ToInt32(location.Px) - size.Width / 2, Convert.ToInt32(location.Py) - size.Height / 2);
             Rectangle rect = new Rectangle(point, size);
-            g.DrawEllipse(pen, rect);
+            g.FillEllipse(opaqueBrush, rect);
+        }
+
+        public int Transparency
+        {
+            get { return transparency; }
+            set { transparency = value; }
         }
 
 
@@ -128,7 +136,7 @@ namespace inertia
         /// If the ball collides it should bounce off
         /// </summary>
         /// <param name="b"></param>
-      
+
         public int Diameter
         {
             get { return diameter; }

@@ -47,7 +47,6 @@ namespace inertia
 
             this.Icon = Properties.Resources.icon;
             b = new Ball(0, matchFieldTop + 10, 20, this.ClientSize.Width);
-            //firstPlanet = new Planet(120, this.ClientSize.Height / 2, 100);
 
             planets = new Planet[7];
 
@@ -93,8 +92,6 @@ namespace inertia
                 {
                     if (i > 0)
                     {
-                        label2.Text = score.ToString();
-
                         if (b.Location.Py < planets[i].Location.Py && aboveOrUnder == false)
                         {
                             score++;
@@ -124,14 +121,12 @@ namespace inertia
             Graphics g = e.Graphics;
             DrawCanvas(g);
             b.DrawBall(g);
-            //firstPlanet.DrawPlanet(g);
-            //firstPlanet.DrawArea(g);
-            //firstPlanet.DebugDraw(g);
             speed.FillCircles(g);
 
             for (int i = 0; i < planets.Length; i++)
             {
                 //TODO: Planets come closer to each other each round.
+                planets[i].DrawArea(g);
                 planets[i].DrawPlanet(g);
                 planets[i].Location.Px -= 2;
 
@@ -141,7 +136,9 @@ namespace inertia
                 }
             }
 
-            g.DrawLine(Pens.White, new Point(this.ClientSize.Width / 2, 100), new Point(this.ClientSize.Width / 2, 0));
+            //g.DrawLine(Pens.White, new Point(this.ClientSize.Width / 2, 100), new Point(this.ClientSize.Width / 2, 0));
+
+            WriteScore(g);
 
         }
 
@@ -195,19 +192,27 @@ namespace inertia
                 {
                     PVector force = planets[i].AttractBall(b);
                     b.ApplyForce(force);
+                    planets[i].Transparency = 90;
+                }
+            }
+
+            if (!space)
+            {
+
+                for (int i = 0; i < planets.Length; i++)
+                {
+                    planets[i].Transparency = 40;
                 }
             }
             if (down)
             {
                 //b.Location.Py += 10;
                 speed.NumberDown();
-                label1.Text = speed.Value.ToString();
             }
             if (up)
             {
                 //b.Location.Py -= 10;
                 speed.NumberUp();
-                label1.Text = speed.Value.ToString();
             }
             if (right)
             {
@@ -244,6 +249,17 @@ namespace inertia
             g.DrawLine(Pens.White, new Point(0, matchFieldBottom), new Point(this.ClientSize.Width, matchFieldBottom));
 
         }
+
+        void WriteScore(Graphics g)
+        {
+            Font font = new Font("MS Comic Sans", 24);
+            string sScore = String.Format("{0}", score);
+            SizeF stringValues = g.MeasureString(sScore, font);
+            g.DrawString(sScore, font, Brushes.White, new Point(Convert.ToInt32(this.ClientSize.Width / 2 - stringValues.Width / 2), Convert.ToInt32(matchFieldTop - stringValues.Height)));
+
+        }
+
+
     }
 }
 
