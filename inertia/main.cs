@@ -37,7 +37,7 @@ namespace inertia
             #endregion
             this.DoubleBuffered = true;
             random = new Random();
-            speed = new Speedometer(7, new Point(this.ClientSize.Width - 20, 90), new Size(10, 10));
+            speed = new Speedometer(7, new Point(this.ClientSize.Width / 2, 90), new Size(20, 20));
 
             matchFieldTop = this.ClientSize.Height / 5;
             matchFieldBottom = this.ClientSize.Height - this.ClientSize.Height / 5;
@@ -73,12 +73,12 @@ namespace inertia
             Invalidate();
             b.Update();
             Tmp1();
-            timeToGenerate += 7;
-            if (timeToGenerate >= 5000)
-            {
-                GeneratePlanets();
-                timeToGenerate = 0;
-            }
+            //timeToGenerate += 7;
+            //if (timeToGenerate >= 5000)
+            //{
+            //    GeneratePlanets();
+            //    timeToGenerate = 0;
+            //}
 
 
             for (int i = 0; i < planets.Length; i++)
@@ -86,7 +86,7 @@ namespace inertia
                 planets[i].BounceOff(b);
             }
 
-            b.ChangeHorizontalVelocity(speed.Value);
+            //b.ChangeHorizontalVelocity(speed.Value);
             b.BounceOfBorder(matchFieldTop, matchFieldBottom);
 
         }
@@ -106,13 +106,13 @@ namespace inertia
             {
                 //b.Location.Py += 10;
                 speed.NumberDown();
-                label1.Text = speed.Value.ToString();
+                //label1.Text = speed.Value.ToString();
             }
             if (up)
             {
                 //b.Location.Py -= 10;
                 speed.NumberUp();
-                label1.Text = speed.Value.ToString();
+                //label1.Text = speed.Value.ToString();
             }
             if (right)
             {
@@ -164,11 +164,13 @@ namespace inertia
                 planets[i].DrawPlanet(g);
                 planets[i].Location.Px -= 2;
 
-                if (planets[i].Location.Px < 0 - planets[i].Mass)
+                if (planets[i].Location.Px < 0 - 100 )
                 {
-                    planets[i].Location.Px = this.ClientSize.Width ;
+                    planets[i].Location.Px = this.ClientSize.Width + 100 ;
                 }
             }
+
+            g.DrawLine(Pens.White, new Point(this.ClientSize.Width / 2, 100), new Point(this.ClientSize.Width / 2, 0));
 
         }
 

@@ -10,40 +10,44 @@ namespace inertia
 {
     class Speedometer
     {
-        int number;
-        int numberCenterCircle; // The the center (neutral) ellipse
-        int distance; //distance between two circles in y direction
-        int movingFromTheCenterCircle;
-
-        Point locationLowest;
-        Rectangle[] rectangles;
+        Point point;
         Size size;
+        Rectangle[] rectangles;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="n">Number of Circles (odd number)</param>
-        /// <param name="point">Position of Circles (starting from lowest one)</param>
-        /// <param name="s">Size of circle</param>
+        int number;
+        int centerCircle;
+        int drawedCircle;
 
-        public Speedometer(int n, Point point, Size s)
+
+        public Speedometer(int n, Point p, Size s)
         {
-            distance = 3;
-            //Number of circles
-            number = n;
-            //Location of the lowest. The Circles are drawn from 0 to [number] and from bottom to top
-            locationLowest = point;
-            //Number of circles
+            number = n; //amount of circles (odd number)
+            centerCircle = number / 2;
             rectangles = new Rectangle[number];
-
-            numberCenterCircle = number / 2;
-            movingFromTheCenterCircle = number / 2;
+            drawedCircle = number / 2; //it begins from the middle
+            point = p;
             size = s;
+            int distanceX = 15;
+            point.X -= (number + 1) * distanceX - 3;
+            int distanceY = -5;
 
-            //Set position of each rectangle
             for (int i = 0; i < rectangles.Length; i++)
             {
-                rectangles[i] = new Rectangle(point.X, point.Y - (size.Height + distance) * i, size.Width, size.Height);
+                if (i < centerCircle)
+                {
+                    rectangles[i] = new Rectangle(point.X + (size.Width + distanceX) * i, point.Y - (size.Height + distanceY) * i, size.Width, size.Height);
+                }
+                if (i == centerCircle)
+                {
+                    rectangles[i] = new Rectangle(point.X + (size.Width + distanceX) * i, point.Y - (size.Height + distanceY) * i, size.Width, size.Height);
+                }
+
+                if (i > centerCircle)
+                {
+
+                    //"(i-(number -1)) subtracts i with the whole amount of circles to begin by zero again
+                    rectangles[i] = new Rectangle(point.X + (size.Width + distanceX) * (i), point.Y + (size.Height + distanceY) * (i - (number - 1)), size.Width, size.Height);
+                }
             }
 
         }
@@ -51,61 +55,48 @@ namespace inertia
 
         public void FillCircles(Graphics g)
         {
-            Brush brush = Brushes.Yellow;
-            Pen pen = Pens.Yellow;
+
+
+            g.FillEllipse(Brushes.Black, rectangles[centerCircle]);
 
 
             for (int i = 0; i < rectangles.Length; i++)
             {
-                g.DrawEllipse(pen, rectangles[i]);
+                g.DrawEllipse(Pens.DarkOliveGreen, rectangles[i]);
             }
 
-            g.FillEllipse(brush, rectangles[numberCenterCircle]); //neutral circle
-
-            //If the circle to be colored isnt the center circle
-            if (movingFromTheCenterCircle != numberCenterCircle)
+            if (drawedCircle > centerCircle)
             {
-                //If its the bottom area
-                if (movingFromTheCenterCircle > numberCenterCircle)
+                for (int i = centerCircle + 1; i <= drawedCircle; i++)
                 {
-                    for (int i = numberCenterCircle + 1; i <= movingFromTheCenterCircle; i++)
-                    {
-                        g.FillEllipse(Brushes.Blue, rectangles[i]);
-                    }
+                    g.FillEllipse(Brushes.Red, rectangles[i]);
                 }
-                if (movingFromTheCenterCircle < numberCenterCircle)
-                {
-                    for (int i = number / 2- 1; i >= movingFromTheCenterCircle; i--)
-                    {
-                        g.FillEllipse(Brushes.Red, rectangles[i]);
-                    }
-                }
-
             }
 
+            if (drawedCircle < centerCircle)
+            {
+                for (int i = centerCircle - 1; i >= drawedCircle; i--)
+                {
+                    g.FillEllipse(Brushes.Red, rectangles[i]);
+                }
+            }
         }
-
 
         public void NumberUp()
         {
-            if (movingFromTheCenterCircle < number - 1)
+            if (drawedCircle < rectangles.Length - 1)
             {
-                movingFromTheCenterCircle += 1;
+                drawedCircle++;
             }
         }
+
         public void NumberDown()
         {
-            if (movingFromTheCenterCircle > 0)
+            if (drawedCircle > 0)
             {
-                movingFromTheCenterCircle -= 1;
+                drawedCircle--;
             }
         }
-
-        public int Value
-        {
-            get { return movingFromTheCenterCircle - numberCenterCircle; }
-        }
-
 
 
     }

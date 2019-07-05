@@ -45,7 +45,7 @@ namespace inertia
                 velocity.Px = 5;
             }
 
-            if (this.Location.Px >= clientSizeWidth / 2)
+            if (this.Location.Px >= clientSizeWidth / 1.4)
             {
                 this.Velocity.Px = -0.3F;
             }
