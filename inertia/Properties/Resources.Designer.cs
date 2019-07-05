@@ -61,6 +61,16 @@ namespace inertia.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap earth {
+            get {
+                object obj = ResourceManager.GetObject("earth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon icon {
@@ -73,9 +83,9 @@ namespace inertia.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap moving_object {
+        internal static System.Drawing.Bitmap moon {
             get {
-                object obj = ResourceManager.GetObject("moving_object", resourceCulture);
+                object obj = ResourceManager.GetObject("moon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +93,9 @@ namespace inertia.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap planet1 {
+        internal static System.Drawing.Bitmap moving_object {
             get {
-                object obj = ResourceManager.GetObject("planet1", resourceCulture);
+                object obj = ResourceManager.GetObject("moving_object", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

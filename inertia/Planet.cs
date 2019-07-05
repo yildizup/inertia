@@ -15,15 +15,18 @@ namespace inertia
         PVector location;
         float G; //gravitational constanct
         int diameter;
-        Bitmap planetBitmap;
+        Bitmap earthBitmap;
+        Bitmap moonBitmap;
         int transparency;
+        int randomNumber; //since the mass is random. I will use it with a modulo operation
         public Planet(int x, int y, int m)
         {
             mass = m;
             G = 0.5F;
             diameter = mass;
             location = new PVector(x - diameter / 2, y - diameter / 2);
-            planetBitmap = new Bitmap(Properties.Resources.planet1);
+            earthBitmap = new Bitmap(Properties.Resources.earth);
+            moonBitmap = new Bitmap(Properties.Resources.moon);
             transparency = 20;
         }
 
@@ -36,7 +39,16 @@ namespace inertia
             //g.DrawEllipse(pen, rect);
 
             Rectangle resizedRectangleBitmap = new Rectangle(Convert.ToInt32(location.Px - size.Width / 2), Convert.ToInt32(location.Py - size.Height / 2), size.Width, size.Height);
-            g.DrawImage(planetBitmap, resizedRectangleBitmap);
+
+            if (mass % 2 == 0)
+            {
+                g.DrawImage(moonBitmap, resizedRectangleBitmap);
+            }
+
+            if (mass % 2 != 0)
+            {
+                g.DrawImage(earthBitmap, resizedRectangleBitmap);
+            }
         }
         public void DrawArea(Graphics g)
         {
