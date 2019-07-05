@@ -13,12 +13,12 @@ namespace inertia
     {
         int mass;
         PVector location;
-        float G; //gravitational constanct
+        readonly float G; //gravitational constant
         int diameter;
         Bitmap earthBitmap;
         Bitmap moonBitmap;
         int transparency;
-        int randomNumber; //since the mass is random. I will use it with a modulo operation
+
         public Planet(int x, int y, int m)
         {
             mass = m;
@@ -59,13 +59,6 @@ namespace inertia
             g.FillEllipse(opaqueBrush, rect);
         }
 
-        public int Transparency
-        {
-            get { return transparency; }
-            set { transparency = value; }
-        }
-
-
         /// <summary>
         ///Calculates the distance to the mouse and then calculates the gravitational force 
         /// </summary>
@@ -102,29 +95,6 @@ namespace inertia
             }
         }
 
-        public void DrawBallArea(Graphics g, Ball b)
-        {
-            Pen p = Pens.Black;
-            g.DrawLine(p, b.Location.Px - 500, b.Location.Py, b.Location.Px - 500, 0);
-            g.DrawLine(p, b.Location.Px + 500, b.Location.Py, b.Location.Px + 500, 0);
-        }
-
-
-        public string DebugInfo(Ball B)
-        {
-            return "Hallo";
-        }
-
-        public void DebugDraw(Graphics g)
-        {
-            Pen p = Pens.Black;
-            int rad = diameter * 4 / 2;
-            //left border
-            g.DrawLine(p, location.Px - rad, location.Py, location.Px - rad, 0);
-
-            //right border
-            g.DrawLine(p, location.Px + rad, location.Py, location.Px + rad, 0);
-        }
         public bool CheckCollision(Ball b)
         {
             PVector distance = PVector.Subtract(b.Location, location);
@@ -144,10 +114,12 @@ namespace inertia
 
         }
 
-        /// <summary>
-        /// If the ball collides it should bounce off
-        /// </summary>
-        /// <param name="b"></param>
+        #region Properties
+        public int Transparency
+        {
+            get { return transparency; }
+            set { transparency = value; }
+        }
 
         public int Diameter
         {
@@ -166,5 +138,7 @@ namespace inertia
             get { return location; }
             set { location = value; }
         }
+
+        #endregion
     }
 }
