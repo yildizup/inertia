@@ -24,6 +24,7 @@ namespace inertia
 
         int score = 0;
         bool aboveOrUnder = false; //only give changing points
+        int timeCounter = 0; //only check every 1 second
 
         readonly int matchFieldTop;
         readonly int matchFieldBottom;
@@ -84,29 +85,38 @@ namespace inertia
                     b.Location = new PVector(0, matchFieldTop + 20);
                 }
 
+                #region Score Counter
                 //calculate the two points if ball is above add 1 to score and then the other way around
-                if (i > 0)
+
+                timeCounter += 7;
+                if (timeCounter >= 1000) //Every second one point
                 {
-                    label2.Text = score.ToString();
-
-                    if (b.Location.Py < planets[i].Location.Py && aboveOrUnder == false)
+                    if (i > 0)
                     {
-                        score++;
-                        aboveOrUnder = true;
-                    }
-                    if (b.Location.Py > planets[i].Location.Py && aboveOrUnder == true)
-                    {
-                        score++;
-                        aboveOrUnder = false;
-                    }
+                        label2.Text = score.ToString();
+
+                        if (b.Location.Py < planets[i].Location.Py && aboveOrUnder == false)
+                        {
+                            score++;
+                            aboveOrUnder = true;
+                        }
+                        if (b.Location.Py > planets[i].Location.Py && aboveOrUnder == true)
+                        {
+                            score++;
+                            aboveOrUnder = false;
+                        }
 
 
+                    }
+                    timeCounter = 0;
                 }
+                #endregion
             }
 
             b.ChangeHorizontalVelocity(speed.Value);
             b.BounceOfBorder(matchFieldTop, matchFieldBottom);
         }
+
 
         protected override void OnPaint(PaintEventArgs e)
         {
