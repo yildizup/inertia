@@ -52,6 +52,8 @@ namespace inertia
 
             GeneratePlanets();
 
+            this.FormBorderStyle = FormBorderStyle.None;
+
             sumXPlanets = 0;
             sumYPlanets = 0;
 
@@ -150,13 +152,12 @@ namespace inertia
                     space = true;
                     break;
                 case Keys.Down:
-                    down = true;
                     break;
                 case Keys.Right:
-                    right = true;
+                    speed.NumberUp();
                     break;
                 case Keys.Left:
-                    left = true;
+                    speed.NumberDown();
                     break;
                 case Keys.Up:
                     up = true;
@@ -167,17 +168,11 @@ namespace inertia
             }
         }
 
-        bool down;
-        bool right;
         bool up;
-        bool left;
         bool one;
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
             space = false;
-            down = false;
-            right = false;
-            left = false;
             up = false;
             one = false;
 
@@ -192,7 +187,11 @@ namespace inertia
                 {
                     PVector force = planets[i].AttractBall(b);
                     b.ApplyForce(force);
-                    planets[i].Transparency = 90;
+
+                    if (planets[i].Transparency < 75)
+                    {
+                        planets[i].Transparency += 2;
+                    }
                 }
             }
 
@@ -204,24 +203,9 @@ namespace inertia
                     planets[i].Transparency = 40;
                 }
             }
-            if (down)
-            {
-                //b.Location.Py += 10;
-                speed.NumberDown();
-            }
             if (up)
             {
-                //b.Location.Py -= 10;
-                speed.NumberUp();
-            }
-            if (right)
-            {
-                b.Location.Px += 10;
                 GeneratePlanets();
-            }
-            if (left)
-            {
-                b.Location.Px -= 10;
             }
             if (one)
             {
