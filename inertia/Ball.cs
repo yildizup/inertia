@@ -111,29 +111,29 @@ namespace inertia
             switch (value)
             {
                 case -3:
-                    HorizontalVelocity = -0.03F;
+                    HorizontalVelocity = -0.4F;
                     break;
 
                 case -2:
 
-                    HorizontalVelocity = -0.02F;
+                    HorizontalVelocity = -0.3F;
                     break;
                 case -1:
 
-                    HorizontalVelocity = -0.01F;
+                    HorizontalVelocity = -0.2F;
                     break;
                 case 0:
 
-                    HorizontalVelocity = 0.01F;
+                    HorizontalVelocity = 0.1F;
                     break;
 
                 case 1:
 
-                    HorizontalVelocity = 0.01F;
+                    HorizontalVelocity = 0.1F;
                     break;
                 case 2:
 
-                    HorizontalVelocity = 0.02F;
+                    HorizontalVelocity = 0.2F;
                     break;
 
                 case 3:

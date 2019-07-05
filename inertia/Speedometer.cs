@@ -28,7 +28,7 @@ namespace inertia
             point = p;
             size = s;
             int distanceX = 25;
-            point.X -= distanceX * (n - 1) - 3; //every +distanceX moves the center to the right, so i subtract it back
+            point.X -= 150; //every +distanceX moves the center to the right, so i subtract it back
             int distanceY = -5;
 
             for (int i = 0; i < rectangles.Length; i++)

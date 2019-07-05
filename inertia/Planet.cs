@@ -40,7 +40,7 @@ namespace inertia
         }
         public void DrawArea(Graphics g)
         {
-            SolidBrush opaqueBrush = new SolidBrush(Color.FromArgb(transparency, 0, 0, 255));
+            SolidBrush opaqueBrush = new SolidBrush(Color.FromArgb(transparency, 240, 0, 255));
             Size size = new Size(diameter + 30, diameter + 30);
             Point point = new Point(Convert.ToInt32(location.Px) - size.Width / 2, Convert.ToInt32(location.Py) - size.Height / 2);
             Rectangle rect = new Rectangle(point, size);
