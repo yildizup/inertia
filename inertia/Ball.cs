@@ -146,7 +146,8 @@ namespace inertia
         {
             if (location.Py - diameter / 2 < topborder + 10)
             {
-                this.Velocity.Multiplicate(-0.3F);
+                this.Velocity.Multiplicate(-0.4F);
+                this.ApplyForce(new PVector(0, 4));
                 location.Py += 1;
             }
             if (location.Py + diameter / 2 > bottomborder)

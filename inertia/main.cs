@@ -96,6 +96,7 @@ namespace inertia
                         GeneratePlanets();
                         score = 0;
                         startGame = false;
+                        speed.Reset();
                     }
 
                     #region Score Counter
@@ -130,11 +131,6 @@ namespace inertia
             if (!startGame)
             {
                 Invalidate();
-                if (up)
-                {
-                    startGame = true;
-                }
-
             }
         }
 
@@ -178,13 +174,23 @@ namespace inertia
                 case Keys.Down:
                     break;
                 case Keys.Right:
-                    speed.NumberUp();
+                    if (startGame)
+                    {
+                        speed.NumberUp();
+                    }
                     break;
                 case Keys.Left:
-                    speed.NumberDown();
+                    if (startGame)
+                    {
+                        speed.NumberDown();
+                    }
                     break;
                 case Keys.Up:
-                    up = true;
+                    if (!startGame)
+                    {
+                        startGame = true;
+                        GeneratePlanets();
+                    }
                     break;
                 case Keys.D1:
                     one = true;
@@ -192,12 +198,10 @@ namespace inertia
             }
         }
 
-        bool up;
         bool one;
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
             space = false;
-            up = false;
             one = false;
 
         }
@@ -231,10 +235,6 @@ namespace inertia
                         planets[i].Transparency -= 2;
                     }
                 }
-            }
-            if (up)
-            {
-                GeneratePlanets();
             }
             if (one)
             {

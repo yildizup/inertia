@@ -101,9 +101,15 @@ namespace inertia
             }
         }
 
+
+        public void Reset()
+        {
+            drawedCircle = centerCircle;
+        }
         public int Value
         {
             get { return -(centerCircle - drawedCircle); } //To make the right side positive
+            //set { drawedCircle = centerCircle; }
         }
 
 
