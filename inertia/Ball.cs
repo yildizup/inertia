@@ -64,7 +64,7 @@ namespace inertia
         }
         public void DrawBall(Graphics g)
         {
-            Pen pen = Pens.Black;
+            Pen pen = Pens.White;
             Size s = new Size((int)diameter, (int)diameter);
             //g.DrawArc(pen, location.Px - s.Width / 2, location.Py - s.Height / 2, s.Width, s.Height, 0, 340);
 
@@ -73,7 +73,7 @@ namespace inertia
             g.DrawImage(RotateImage(ballBitmap, rotatingAngle), resizedRectangleBitmap);
             if (rotatingAngle < 360)
             {
-                rotatingAngle += 2;
+                rotatingAngle += 5;
             }
             else
             {
