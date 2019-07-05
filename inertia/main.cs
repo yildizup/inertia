@@ -54,7 +54,7 @@ namespace inertia
 
             #region instances
             speedometer = new Speedometer(7, new Point(this.ClientSize.Width / 2, 90), new Size(20, 20));
-            ball = new Ball(0, matchFieldTop + 10, 20, this.ClientSize.Width);
+            ball = new Ball(20, matchFieldTop + 10, 20, this.ClientSize.Width);
             planets = new Planet[7];
             #endregion
 
@@ -78,7 +78,7 @@ namespace inertia
                 {
                     if (planets[i].CheckCollision(ball))
                     {
-                        ball.Location = new PVector(0, matchFieldTop + 20);
+                        ball.Location = new PVector(ball.Diameter, matchFieldTop + 20);
                         GeneratePlanets();
                         score = 0;
                         startGame = false;
@@ -112,7 +112,7 @@ namespace inertia
                 }
 
                 ball.ChangeHorizontalVelocity(speedometer.Value);
-                ball.BounceOfBorder(matchFieldTop, matchFieldBottom);
+                ball.BounceOfVerticalBorder(matchFieldTop, matchFieldBottom);
             }
             if (!startGame)
             {

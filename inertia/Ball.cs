@@ -11,7 +11,6 @@ namespace inertia
     class Ball
     {
 
-        Graphics g;
         PVector location;
         PVector velocity;
         PVector acceleration;
@@ -36,11 +35,8 @@ namespace inertia
         {
             velocity.Add(acceleration);
             Location.Add(velocity);
+            BounceOfHorizontalBorder();
             velocity.Limit(20);
-            //if (velocity.Px > 5)
-            //{
-            //    velocity.Px = 5;
-            //}
 
             if (this.Location.Px >= clientSizeWidth / 1.4)
             {
@@ -63,7 +59,6 @@ namespace inertia
         {
             Pen pen = Pens.White;
             Size s = new Size((int)diameter, (int)diameter);
-            //g.DrawArc(pen, location.Px - s.Width / 2, location.Py - s.Height / 2, s.Width, s.Height, 0, 340);
 
             //Resizes according to the size of the ball
             Rectangle resizedRectangleBitmap = new Rectangle(Convert.ToInt32(location.Px - s.Width / 2), Convert.ToInt32(location.Py - s.Height / 2), s.Width, s.Height);
@@ -116,7 +111,6 @@ namespace inertia
                     this.velocity.Px = -0.8F;
                     break;
                 case -1:
-
                     this.velocity.Px = -0.5F;
                     break;
                 case 0:
@@ -142,7 +136,7 @@ namespace inertia
 
         }
 
-        public void BounceOfBorder(int topborder, int bottomborder)
+        public void BounceOfVerticalBorder(int topborder, int bottomborder)
         {
             if (location.Py - diameter / 2 < topborder + 10)
             {
@@ -155,10 +149,20 @@ namespace inertia
                 this.Velocity.Multiplicate(-0.3F);
                 location.Py -= 1;
             }
-
-
         }
 
+         void BounceOfHorizontalBorder()
+        {
+            if (this.location.Px <= this.diameter)
+            {
+                this.Location.Px = this.diameter +1 ;
+                this.Velocity.Px = 1;
+
+
+            }
+        }
+
+        #region Properties
         public PVector Location
         {
             get { return location; }
@@ -186,5 +190,7 @@ namespace inertia
             get { return diameter; }
             set { diameter = value; }
         }
+
+        #endregion
     }
 }

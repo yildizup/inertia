@@ -106,6 +106,7 @@ namespace inertia
         {
             drawedCircle = centerCircle;
         }
+
         public int Value
         {
             get { return -(centerCircle - drawedCircle); } //To make the right side positive
