@@ -65,7 +65,7 @@ namespace inertia
 
             for (int i = 0; i < rectangles.Length; i++)
             {
-                g.DrawEllipse(Pens.DarkOliveGreen, rectangles[i]);
+                g.DrawEllipse(Pens.DarkSlateGray, rectangles[i]);
             }
 
             if (drawedCircle > centerCircle)
