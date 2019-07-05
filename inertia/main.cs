@@ -63,7 +63,7 @@ namespace inertia
             for (int i = 0; i < planets.Length; i++)
             {
                 int mass = random.Next(100, 180);
-                sumXPlanets += mass + 80; //Planets have a minimum distance of their diameter + 80
+                sumXPlanets += mass + 100; //Planets have a minimum distance of their diameter + 80
                 int x_position = random.Next(sumXPlanets, sumXPlanets + 20);
                 int y_position = random.Next(matchFieldTop + mass * 2, matchFieldBottom - mass / 2);
                 planets[i] = new Planet(x_position, y_position, mass);

@@ -17,6 +17,13 @@ namespace inertia
 
         #region static methods
         //static, because the class doesn't have to be initialized before using this method
+
+        //cross product
+        public static float Dot(PVector v1, PVector v2)
+        {
+            return v1.Px * v2.Py - v2.Px * v1.Py;
+
+        }
         public static PVector Add(PVector v1, PVector v2)
         {
             PVector v3 = new PVector(v1.px + v2.px, v1.py + v2.py);

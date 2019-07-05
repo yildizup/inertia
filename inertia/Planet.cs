@@ -132,7 +132,6 @@ namespace inertia
         {
             if (CheckCollision(b))
             {
-                b.Acceleration.Multiplicate(-1);
                 b.Velocity.Multiplicate(-1);
                 //TOFIX:ball stucks in planet sometimes
             }

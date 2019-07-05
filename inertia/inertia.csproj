@@ -85,34 +85,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ufo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\planet1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\planet1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\planet1test.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\marsi.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\planet2.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\wallpaper2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\wallpaper.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\ufo2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\moving_object1.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon.ico" />
