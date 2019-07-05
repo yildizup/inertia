@@ -128,20 +128,7 @@ namespace inertia
         /// If the ball collides it should bounce off
         /// </summary>
         /// <param name="b"></param>
-        public void BounceOff(Ball b)
-        {
-            if (CheckCollision(b))
-            {
-                b.Velocity.Multiplicate(-1);
-                //TOFIX:ball stucks in planet sometimes
-            }
-            else
-            {
-
-            }
-
-        }
-
+      
         public int Diameter
         {
             get { return diameter; }

@@ -85,7 +85,10 @@ namespace inertia
 
             for (int i = 0; i < planets.Length; i++)
             {
-                planets[i].BounceOff(b);
+                if(planets[i].CheckCollision(b))
+                {
+                    b.Location = new PVector(0, matchFieldTop + 20);
+                }
             }
 
             b.ChangeHorizontalVelocity(speed.Value);
