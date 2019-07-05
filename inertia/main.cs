@@ -21,8 +21,9 @@ namespace inertia
 
         int sumXPlanets; // to have a specific distance between to planets
         int sumYPlanets;
-        int timeToGenerate; //Time after the new Planets are generated
 
+        int score = 0;
+        bool aboveOrUnder = false; //only give changing points
 
         readonly int matchFieldTop;
         readonly int matchFieldBottom;
@@ -53,7 +54,6 @@ namespace inertia
 
             sumXPlanets = 0;
             sumYPlanets = 0;
-            timeToGenerate = 0;
 
         }
 
@@ -70,7 +70,6 @@ namespace inertia
                 planets[i] = new Planet(x_position, y_position, mass);
             }
         }
-
         private void TimerEventProcessor(object sender, EventArgs e)
         {
             Invalidate();
@@ -83,6 +82,25 @@ namespace inertia
                 if (planets[i].CheckCollision(b))
                 {
                     b.Location = new PVector(0, matchFieldTop + 20);
+                }
+
+                //calculate the two points if ball is above add 1 to score and then the other way around
+                if (i > 0)
+                {
+                    label2.Text = score.ToString();
+
+                    if (b.Location.Py < planets[i].Location.Py && aboveOrUnder == false)
+                    {
+                        score++;
+                        aboveOrUnder = true;
+                    }
+                    if (b.Location.Py > planets[i].Location.Py && aboveOrUnder == true)
+                    {
+                        score++;
+                        aboveOrUnder = false;
+                    }
+
+
                 }
             }
 
@@ -111,15 +129,6 @@ namespace inertia
                 {
                     planets[i].Location.Px = this.ClientSize.Width + 100;
                 }
-
-
-                //Draw Line between to planets
-                if (i > 0 && i < planets.Length )
-                {
-                    g.DrawLine(Pens.White, new Point((int)planets[i - 1].Location.Px, (int)planets[i - 1].Location.Py), new Point((int)planets[i].Location.Px, (int)planets[i].Location.Py));
-                }
-
-
             }
 
             g.DrawLine(Pens.White, new Point(this.ClientSize.Width / 2, 100), new Point(this.ClientSize.Width / 2, 0));
