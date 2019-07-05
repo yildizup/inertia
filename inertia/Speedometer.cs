@@ -28,7 +28,10 @@ namespace inertia
             point = p;
             size = s;
             int distanceX = 25;
-            point.X -= 150; //every +distanceX moves the center to the right, so i subtract it back
+            point.X -= (distanceX * (centerCircle + 1)) + ((size.Width / 2) * (centerCircle + 2)); 
+            /* Explanation: 
+             * the first circle is the leftmost. Because of this i have to calculate the product of all distances till the center and the same for the radii and subtract it with die width
+             */
             int distanceY = -5;
 
             for (int i = 0; i < rectangles.Length; i++)
@@ -57,7 +60,7 @@ namespace inertia
         {
 
 
-            g.FillEllipse(Brushes.Black, rectangles[centerCircle]);
+            g.FillEllipse(Brushes.White, rectangles[centerCircle]);
 
 
             for (int i = 0; i < rectangles.Length; i++)
